@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Misc",
+  "FriendlyName": "Category specification attributes",
+  "SystemName": "CategorySpecAttributes",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.40" ],
+  "Author": "Furkan Bozkurt",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Misc.CategorySpecAttribute.dll",
+  "Description": "This plugin enables category spesific specification attributes. This can be useful when adding new products."
+}

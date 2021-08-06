@@ -1,0 +1,21 @@
+﻿@model (IList<Category> categories, SpecificationAttributeGroupModel specificationAttributeGroup, List<CategorySpecificationAttributeGroup> categorySpecificationAttributeGroups)
+
+@{
+    const string hideCategoryBlockAttributeGroupName = "SpecificationAttributeGroupPage.HideCategoryBlock";
+    var hideCategoryBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hideCategoryBlockAttributeGroupName);
+}
+
+<nop-card asp-name="specification-attribute-group-category" asp-icon="fas fa-info" asp-title="Category" asp-hide-block-attribute-name="@hideCategoryBlockAttributeGroupName" asp-hide="@hideCategoryBlock" asp-advanced="false">
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="SelectedCategoryIds" />
+            </div>
+            <div class="col-md-9">
+                <nop-select asp-for="SelectedCategoryIds" asp-items="@Model." />
+                <span asp-validation-for="DisplayOrder"></span>
+            </div>
+            <div class=""></div>
+        </div>
+    </div>
+</nop-card>
