@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Plugin.Misc.CategorySpecAttribute.Domain;
 using Nop.Plugin.Misc.CategorySpecAttribute.Services;
+using Nop.Plugin.Misc.CategorySpecificationAttribute.Models;
 using Nop.Services.Catalog;
 using Nop.Web.Areas.Admin.Models.Catalog;
 using Nop.Web.Framework.Components;
@@ -36,12 +37,15 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Components
             if (model.Id == 0)
                 return Content(string.Empty);
 
-            var categories = await _categoryService.GetAllCategoriesAsync();
+            var avaliableCategories = await _categoryService.GetAllCategoriesAsync();
 
-            var categorySpecAttributeGroups = await _categorySpecificationAttributeService.GetBySpecificationAttributeGroupId(model.Id) as List<CategorySpecificationAttributeGroup>;
+            SpecificationAttributeGroupCategoryModel specificationAttributeGroupCategoryModel = new SpecificationAttributeGroupCategoryModel()
+            {
+                Id = model.Id
+            };
 
-            if (categories != null && categories.Count > 0)
-                return View("~/Plugins/Misc.CategorySpecAttribute/Views/_CreateOrUpdateSpecificationAttributeGroup.UsedByCategories.cshtml", (categories, model, categorySpecAttributeGroups));
+            if (avaliableCategories != null && avaliableCategories.Count > 0)
+                return View("~/Plugins/Misc.CategorySpecificationAttribute/Views/_CreateOrUpdateSpecificationAttributeGroup.UsedByCategories.cshtml", specificationAttributeGroupCategoryModel);
 
             return Content(string.Empty);
         }
