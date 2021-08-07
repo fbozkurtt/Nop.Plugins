@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Plugin.Misc.CategorySpecAttribute.Domain;
 using Nop.Plugin.Misc.CategorySpecAttribute.Services;
+using Nop.Plugin.Misc.CategorySpecificationAttribute.Factories;
 using Nop.Plugin.Misc.CategorySpecificationAttribute.Models;
 using Nop.Services.Catalog;
 using Nop.Web.Areas.Admin.Models.Catalog;
@@ -18,15 +19,18 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Components
         private readonly ICategoryService _categoryService;
         private readonly ISpecificationAttributeService _specificationAttributeService;
         private readonly ICategorySpecificationAttributeService _categorySpecificationAttributeService;
+        private readonly ISpecificationAttributeGroupCategoryModelFactory _specificationAttributeGroupCategoryModelFactory;
 
         public CategorySpecificationAttributeGroupViewComponent(
             ICategoryService categoryService,
             ISpecificationAttributeService specificationAttributeService,
-            ICategorySpecificationAttributeService categorySpecificationAttributeService)
+            ICategorySpecificationAttributeService categorySpecificationAttributeService,
+            ISpecificationAttributeGroupCategoryModelFactory specificationAttributeGroupCategoryModelFactory)
         {
             _categoryService = categoryService;
             _specificationAttributeService = specificationAttributeService;
             _categorySpecificationAttributeService = categorySpecificationAttributeService;
+            _specificationAttributeGroupCategoryModelFactory = specificationAttributeGroupCategoryModelFactory;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
@@ -39,10 +43,11 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Components
 
             var avaliableCategories = await _categoryService.GetAllCategoriesAsync();
 
-            SpecificationAttributeGroupCategoryModel specificationAttributeGroupCategoryModel = new SpecificationAttributeGroupCategoryModel()
-            {
-                Id = model.Id
-            };
+            var specificationAttributeGroupCategoryModel = await _specificationAttributeGroupCategoryModelFactory
+                .PrepareSpecificationAttributeGroupCategoryModelAsync(new SpecificationAttributeGroupCategoryModel()
+                {
+                    Id = model.Id
+                });
 
             if (avaliableCategories != null && avaliableCategories.Count > 0)
                 return View("~/Plugins/Misc.CategorySpecificationAttribute/Views/_CreateOrUpdateSpecificationAttributeGroup.UsedByCategories.cshtml", specificationAttributeGroupCategoryModel);

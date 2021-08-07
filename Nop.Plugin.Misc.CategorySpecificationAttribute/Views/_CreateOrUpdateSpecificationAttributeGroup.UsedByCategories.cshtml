@@ -13,7 +13,7 @@
                     <nop-label asp-for="@Model.SelectedCategoryIds" />
                 </div>
                 <div class="col-md-6">
-                    <nop-select asp-for="@Model.SelectedCategoryIds" asp-items="@Model.AvailableCategories" />
+                    <nop-select asp-for="@Model.SelectedCategoryIds" asp-items="@Model.AvailableCategories" asp-multiple="true" />
                     <script>
                         $(document).ready(function() {
 				        	var categoryIdsInput = $('#@Html.IdFor(model => model.SelectedCategoryIds)').data("kendoMultiSelect");
@@ -37,7 +37,7 @@
                     </script>
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" name="save-categories" class="btn btn-primary">
+                    <button type="button" name="save-categories" class="btn btn-primary">
                         <i class="far fa-save"></i>
                         @T("Admin.Common.Save")
                     </button>
