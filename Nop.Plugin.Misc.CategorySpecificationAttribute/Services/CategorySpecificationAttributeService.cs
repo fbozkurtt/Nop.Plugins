@@ -7,16 +7,19 @@ using Nop.Core.Domain.Catalog;
 using Nop.Data;
 using Nop.Plugin.Misc.CategorySpecAttribute.Domain;
 using Nop.Plugin.Misc.CategorySpecificationAttribute.Models;
+using Nop.Services.Catalog;
 
 namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
 {
     class CategorySpecificationAttributeService : ICategorySpecificationAttributeService
     {
         private readonly IRepository<CategorySpecificationAttributeGroup> _categorySpecificationAttributeRepository;
+        private readonly ICategoryService _categoryService;
 
-        public CategorySpecificationAttributeService(IRepository<CategorySpecificationAttributeGroup> categorySpecificationAttributeRepository)
+        public CategorySpecificationAttributeService(IRepository<CategorySpecificationAttributeGroup> categorySpecificationAttributeRepository, ICategoryService categoryService)
         {
             _categorySpecificationAttributeRepository = categorySpecificationAttributeRepository;
+            _categoryService = categoryService;
         }
 
         public virtual async Task CreateAsync(CategorySpecificationAttributeGroup model)
@@ -32,11 +35,38 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
             {
                 return query.Where(c => c.SpecificationAttributeGroupId == model.Id);
             });
-            (model.SelectedCategoryIds as List<int>).ForEach((id) =>
+
+            foreach (var existingCategorySpecificationAttributeGroup in existingCategorySpecificationAttributeGroups)
+                if (!model.SelectedCategoryIds.Contains(existingCategorySpecificationAttributeGroup.CategoryId))
+                    await _categorySpecificationAttributeRepository.DeleteAsync(existingCategorySpecificationAttributeGroup);
+
+            foreach (var categoryId in model.SelectedCategoryIds)
             {
-                if (!existingCategorySpecificationAttributeGroups.Any(e => e.CategoryId == id))
-                    _categorySpecificationAttributeRepository.InsertAsync(new CategorySpecificationAttributeGroup() { CategoryId = id, SpecificationAttributeGroupId = model.Id });
-            });
+                if (!existingCategorySpecificationAttributeGroups.Any(e => e.CategoryId == categoryId))
+                {
+                    await _categorySpecificationAttributeRepository.InsertAsync(new CategorySpecificationAttributeGroup() { CategoryId = categoryId, SpecificationAttributeGroupId = model.Id });
+                }
+            }
+            //var categories = await _categoryService.GetAllCategoriesAsync() as List<Category>;
+            //categories.ForEach(async (category) =>
+            //{
+            //    if (model.SelectedCategoryIds.Contains(category.Id) 
+            //    && !existingCategorySpecificationAttributeGroups.Any(c => c.CategoryId == category.Id))
+            //    {
+            //        await _categorySpecificationAttributeRepository.InsertAsync(new CategorySpecificationAttributeGroup() { CategoryId = id, SpecificationAttributeGroupId = model.Id });
+            //    }
+                        
+            //});
+            //(model.SelectedCategoryIds as List<int>).ForEach(async (id) =>
+            //{
+            //    if (!existingCategorySpecificationAttributeGroups.Any(e => e.CategoryId == id))
+            //        await _categorySpecificationAttributeRepository.InsertAsync(new CategorySpecificationAttributeGroup() { CategoryId = id, SpecificationAttributeGroupId = model.Id });
+            //    else
+            //        await _categorySpecificationAttributeRepository.DeleteAsync((await _categorySpecificationAttributeRepository.GetAllAsync(query =>
+            //        {
+            //            return query.Where(c => c.CategoryId == id && c.SpecificationAttributeGroupId == model.Id);
+            //        })), false);
+            //});
         }
 
         public async Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupId(int specificationAttributeGroupId) =>

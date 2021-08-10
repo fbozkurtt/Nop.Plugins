@@ -5,6 +5,31 @@
     var hideCategoryBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hideCategoryBlockAttributeGroupName);
 }
 
+<script>
+    function saveCategories() {
+        selectedCategoryIds = Array.from(document.getElementById('@Html.IdFor(model => model.SelectedCategoryIds)').options).filter(o => o.selected).map(o => o.value);
+        var postData = @Html.Raw(Json.Serialize(Model));
+        postData.SelectedCategoryIds = selectedCategoryIds;
+        addAntiForgeryToken(postData);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("Create", "CategorySpecificationAttribute")",
+            data: postData,
+            dataType: "json",
+            done: function (data, textStatus, jqXHR) {
+                alert('Updated');
+            },
+            fail: function (jqXHR, textStatus, errorThrown) {
+                alert('Error');
+            },
+            complete: function (jqXHR, textStatus) {
+
+            }
+        });
+    }
+</script>
+
 <form asp-controller="CategorySpecificationAttribute" asp-action="Create" method="post" id="category-form">
     <nop-card asp-name="specification-attribute-group-category" asp-icon="fas fa-info" asp-title="Category" asp-hide-block-attribute-name="@hideCategoryBlockAttributeGroupName" asp-hide="@hideCategoryBlock" asp-advanced="false">
         <div class="card-body">
@@ -37,10 +62,11 @@
                     </script>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" name="save-categories" class="btn btn-primary">
+                    <button type="button" name="save-categories" class="btn btn-primary" onclick="saveCategories()">
                         <i class="far fa-save"></i>
                         @T("Admin.Common.Save")
                     </button>
+                    @Html.ActionLink(T("Admin.Common.Save").Text, "Create", "CategorySpecificationAttribute", Model, new { @class = "btn btn-primary", name = "save-categories" })
                 </div>
             </div>
         </div>
