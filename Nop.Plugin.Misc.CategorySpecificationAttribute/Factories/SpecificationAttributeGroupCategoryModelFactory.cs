@@ -22,7 +22,7 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Factories
 
         public async Task<SpecificationAttributeGroupCategoryModel> PrepareSpecificationAttributeGroupCategoryModelAsync(SpecificationAttributeGroupCategoryModel model)
         {
-            model.SelectedCategoryIds = (await _categorySpecificationAttributeService.GetBySpecificationAttributeGroupId(model.Id))
+            model.SelectedCategoryIds = (await _categorySpecificationAttributeService.GetBySpecificationAttributeGroupIdAsync(model.Id))
                         .Select(c => c.CategoryId).ToList();
 
             await _baseAdminModelFactory.PrepareCategoriesAsync(model.AvailableCategories, false);

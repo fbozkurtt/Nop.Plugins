@@ -15,12 +15,21 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute
 
         public string GetWidgetViewComponentName(string widgetZone)
         {
-            return "CategorySpecificationAttributeGroup";
+            if (widgetZone.Equals(AdminWidgetZones.SpecificationAttributeGroupDetailsBlock))
+                return "CategorySpecificationAttributeGroup";
+            if (widgetZone.Equals(AdminWidgetZones.ProductListButtons))
+                return "CreateProductButton";
+
+            return string.Empty;
         }
 
         public Task<IList<string>> GetWidgetZonesAsync()
         {
-            return Task.FromResult<IList<string>>(new List<string> { AdminWidgetZones.SpecificationAttributeGroupDetailsBlock });
+            return Task.FromResult<IList<string>>(new List<string>
+            {
+                AdminWidgetZones.SpecificationAttributeGroupDetailsBlock,
+                AdminWidgetZones.ProductListButtons
+            });
         }
     }
 }

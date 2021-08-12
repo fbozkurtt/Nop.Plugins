@@ -11,15 +11,17 @@ using Nop.Services.Catalog;
 
 namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
 {
-    class CategorySpecificationAttributeService : ICategorySpecificationAttributeService
+    public class CategorySpecificationAttributeService : ICategorySpecificationAttributeService
     {
         private readonly IRepository<CategorySpecificationAttributeGroup> _categorySpecificationAttributeRepository;
         private readonly ICategoryService _categoryService;
+        private readonly ISpecificationAttributeService _specificationAttributeService;
 
-        public CategorySpecificationAttributeService(IRepository<CategorySpecificationAttributeGroup> categorySpecificationAttributeRepository, ICategoryService categoryService)
+        public CategorySpecificationAttributeService(IRepository<CategorySpecificationAttributeGroup> categorySpecificationAttributeRepository, ICategoryService categoryService, ISpecificationAttributeService specificationAttributeService)
         {
             _categorySpecificationAttributeRepository = categorySpecificationAttributeRepository;
             _categoryService = categoryService;
+            _specificationAttributeService = specificationAttributeService;
         }
 
         public virtual async Task CreateAsync(CategorySpecificationAttributeGroup model)
@@ -55,7 +57,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
             //    {
             //        await _categorySpecificationAttributeRepository.InsertAsync(new CategorySpecificationAttributeGroup() { CategoryId = id, SpecificationAttributeGroupId = model.Id });
             //    }
-                        
+
             //});
             //(model.SelectedCategoryIds as List<int>).ForEach(async (id) =>
             //{
@@ -69,9 +71,12 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
             //});
         }
 
-        public async Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupId(int specificationAttributeGroupId) =>
+        public async Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId) =>
             await _categorySpecificationAttributeRepository.GetAllAsync(query =>
             query.Where(c => c.SpecificationAttributeGroupId == specificationAttributeGroupId));
 
+        public async Task<IList<CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId) =>
+            await _categorySpecificationAttributeRepository.GetAllAsync(query =>
+            query.Where(c => c.CategoryId == categoryId));
     }
 }

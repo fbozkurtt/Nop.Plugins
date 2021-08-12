@@ -16,8 +16,12 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Infrastructure
         public void RegisterRoutes(IEndpointRouteBuilder endpointRouteBuilder)
         {
             endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttribute.Create",
-                "Admin/CategorySpecificationAttribute/Create",
+                "Plugins/CategorySpecificationAttribute/Create",
                 new { controller = "CategorySpecificationAttribute", action = "Create" });
+
+            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttribute.GetSpecificationAttributesByCategoryId",
+                "Plugins/CategorySpecificationAttribute/GetSpecificationAttributesByCategoryId",
+                new { controller = "CategorySpecificationAttribute", action = "GetSpecificationAttributesByCategoryId" });
         }
     }
 }

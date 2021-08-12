@@ -15,6 +15,8 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
 
         Task CreateAsync(SpecificationAttributeGroupCategoryModel model);
 
-        Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupId(int specificationAttributeGroupId);
+        Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId);
+
+        Task<IList<CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId);
     }
 }
