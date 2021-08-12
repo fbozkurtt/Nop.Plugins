@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Vendors;
 using Nop.Plugin.Misc.CategorySpecAttribute.Domain;
 using Nop.Plugin.Misc.CategorySpecAttribute.Services;
@@ -74,7 +75,7 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSpecificationAttributesByCategoryId(int categoryId)
+        public async Task<IActionResult> GetSpecificationAttributesByCategoryId(int categoryId, bool includeNonGroupedAttributes = true)
         {
             var categorySpecAttributeGroups = await _categorySpecificationAttributeService.GetByCategoryIdAsync(categoryId);
             var result = (from c in categorySpecAttributeGroups
