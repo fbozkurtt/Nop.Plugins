@@ -60,13 +60,12 @@
             data: postData,
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
-                document.location = '@Url.Action("List", "Product")';
+                saveProductPicture(productId);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('Error ' + textStatus);
             },
             complete: function (jqXHR, textStatus) {
-                $("#save-button").prop("disabled", false);
             }
         });
     }
@@ -103,6 +102,48 @@
             }
         });
     }
+
+    function saveProductPicture(productId) {
+        var pictureId = $("#@Html.IdFor(model => model.AddPictureModel.PictureId)").val();
+        var overrideAltAttribute = $("#@Html.IdFor(model => model.AddPictureModel.OverrideAltAttribute)").val();
+        var overrideTitleAttribute = $("#@Html.IdFor(model => model.AddPictureModel.OverrideTitleAttribute)").val();
+        var displayOrder = $("#@Html.IdFor(model => model.AddPictureModel.DisplayOrder)").val();
+
+        if (pictureId == 0) {
+            $("#addProductPictureAlert").click();
+            return;
+        }
+
+        $('#addProductPicture').attr('disabled', true);
+
+        var postData = {
+            pictureId: pictureId,
+            displayOrder: displayOrder,
+            overrideAltAttribute: overrideAltAttribute,
+            overrideTitleAttribute: overrideTitleAttribute,
+            productId: productId
+        };
+        addAntiForgeryToken(postData);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.Action("ProductPictureAdd", "Product"))",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                if (!data.Result) {
+                    return;
+                }
+                document.location = '@Url.Action("List", "Product")';
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            },
+            complete: function (jqXHR, textStatus) {
+                $("#save-button").prop("disabled", false);
+            }
+        });
+    }
 </script>
 <div class="container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -118,7 +159,49 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
+            <div class="card card-default">
+                <div class="card-header">
+                    @T("Admin.Catalog.Products.Pictures.AddNew")
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="@Model.AddPictureModel.PictureId" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="@Model.AddPictureModel.PictureId" />
+                            <span asp-validation-for="@Model.AddPictureModel.PictureId"></span>
+                        </div>
+                    </div>
+                    @*<div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="@Model.AddPictureModel.OverrideAltAttribute" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="@Model.AddPictureModel.OverrideAltAttribute" />
+                            <span asp-validation-for="@Model.AddPictureModel.OverrideAltAttribute"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="@Model.AddPictureModel.OverrideTitleAttribute" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="@Model.AddPictureModel.OverrideTitleAttribute" />
+                            <span asp-validation-for="@Model.AddPictureModel.OverrideTitleAttribute"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="@Model.AddPictureModel.DisplayOrder" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="@Model.AddPictureModel.DisplayOrder" />
+                            <span asp-validation-for="@Model.AddPictureModel.DisplayOrder"></span>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="form-group mt-3">

@@ -115,9 +115,8 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Controllers
             var result = (from c in categorySpecAttributeGroups
                           select new
                           {
-                              id = c.Id,
                               name = _specificationAttributeService.GetSpecificationAttributeGroupByIdAsync(c.SpecificationAttributeGroupId).Result.Name,
-                              specificationAttributes = (from s in _specificationAttributeService.GetSpecificationAttributesByGroupIdAsync(c.Id).Result
+                              specificationAttributes = (from s in _specificationAttributeService.GetSpecificationAttributesByGroupIdAsync(c.SpecificationAttributeGroupId).Result
                                                          select new
                                                          {
                                                              name = s.Name,
@@ -129,6 +128,22 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Controllers
                                                                         }).ToList()
                                                          }).ToList()
                           }).ToList();
+
+            result.Add(new
+            {
+                name = "default",
+                specificationAttributes = (from s in _specificationAttributeService.GetSpecificationAttributesByGroupIdAsync().Result
+                                           select new
+                                           {
+                                               name = s.Name,
+                                               options = (from o in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttributeAsync(s.Id).Result
+                                                          select new
+                                                          {
+                                                              id = o.Id,
+                                                              name = o.Name
+                                                          }).ToList()
+                                           }).ToList()
+            });
             return Json(result);
         }
 
