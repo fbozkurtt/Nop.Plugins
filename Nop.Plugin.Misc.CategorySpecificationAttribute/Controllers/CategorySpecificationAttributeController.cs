@@ -244,6 +244,8 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Controllers
                 if (await _workContext.GetCurrentVendorAsync() != null && model.ShowOnHomepage)
                     model.ShowOnHomepage = false;
 
+                model.Published = true;
+
                 //product
                 var product = model.ToEntity<Product>();
                 product.CreatedOnUtc = DateTime.UtcNow;
