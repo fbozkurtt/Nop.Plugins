@@ -22,6 +22,14 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Infrastructure
             endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttribute.GetSpecificationAttributesByCategoryId",
                 "Plugins/CategorySpecificationAttribute/GetSpecificationAttributesByCategoryId",
                 new { controller = "CategorySpecificationAttribute", action = "GetSpecificationAttributesByCategoryId" });
+
+            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttribute.ProductSpecificationAttributeAdd",
+                "Plugins/CategorySpecificationAttribute/ProductSpecificationAttributeAdd",
+                new { controller = "CategorySpecificationAttribute", action = "ProductSpecificationAttributeAdd" });
+
+            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttribute.CreateProduct",
+                "Plugins/CategorySpecificationAttribute/CreateProduct",
+                new { controller = "CategorySpecificationAttribute", action = "CreateProduct" });
         }
     }
 }

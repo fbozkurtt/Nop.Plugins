@@ -7,7 +7,7 @@
 
 <script>
     function saveCategories() {
-        selectedCategoryIds = Array.from(document.getElementById('@Html.IdFor(model => model.SelectedCategoryIds)').options).filter(o => o.selected).map(o => o.value);
+        var selectedCategoryIds = Array.from(document.getElementById('@Html.IdFor(model => model.SelectedCategoryIds)').options).filter(o => o.selected).map(o => o.value);
         var postData = @Html.Raw(Json.Serialize(Model));
         postData.SelectedCategoryIds = selectedCategoryIds;
         addAntiForgeryToken(postData);
