@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Factories
 {
-    public interface ISpecificationAttributeGroupCategoryModelFactory
+    public interface ICategorySpecificationAttributeGroupModelFactory
     {
         public Task<SpecificationAttributeGroupCategoryModel> PrepareSpecificationAttributeGroupCategoryModelAsync(SpecificationAttributeGroupCategoryModel model);
     }

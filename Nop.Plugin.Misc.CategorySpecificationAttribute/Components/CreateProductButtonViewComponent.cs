@@ -13,7 +13,7 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Components
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult(View("~/Plugins/Misc.CategorySpecificationAttribute/Views/CreateProductButton.cshtml"));
+            return await Task.FromResult(View("~/Plugins/Misc.CategorySpecificationAttributeGroup/Views/Components/CreateProductButton.cshtml"));
         }
     }
 }

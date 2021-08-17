@@ -16,22 +16,22 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Components
     [ViewComponent(Name = "CategorySpecificationAttributeGroup")]
     public class CategorySpecificationAttributeGroupViewComponent : NopViewComponent
     {
-        private readonly ICategoryService _categoryService;
-        private readonly ISpecificationAttributeService _specificationAttributeService;
-        private readonly ICategorySpecificationAttributeService _categorySpecificationAttributeService;
-        private readonly ISpecificationAttributeGroupCategoryModelFactory _specificationAttributeGroupCategoryModelFactory;
+        #region Fields
 
-        public CategorySpecificationAttributeGroupViewComponent(
-            ICategoryService categoryService,
-            ISpecificationAttributeService specificationAttributeService,
-            ICategorySpecificationAttributeService categorySpecificationAttributeService,
-            ISpecificationAttributeGroupCategoryModelFactory specificationAttributeGroupCategoryModelFactory)
+        private readonly ICategorySpecificationAttributeGroupModelFactory _specificationAttributeGroupCategoryModelFactory;
+
+        #endregion
+
+        #region Ctor
+
+        public CategorySpecificationAttributeGroupViewComponent(ICategorySpecificationAttributeGroupModelFactory specificationAttributeGroupCategoryModelFactory)
         {
-            _categoryService = categoryService;
-            _specificationAttributeService = specificationAttributeService;
-            _categorySpecificationAttributeService = categorySpecificationAttributeService;
             _specificationAttributeGroupCategoryModelFactory = specificationAttributeGroupCategoryModelFactory;
         }
+
+        #endregion
+
+        #region Methods
 
         public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
         {
@@ -41,18 +41,15 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Components
             if (model.Id == 0)
                 return Content(string.Empty);
 
-            var avaliableCategories = await _categoryService.GetAllCategoriesAsync();
-
             var specificationAttributeGroupCategoryModel = await _specificationAttributeGroupCategoryModelFactory
                 .PrepareSpecificationAttributeGroupCategoryModelAsync(new SpecificationAttributeGroupCategoryModel()
                 {
                     Id = model.Id
                 });
 
-            if (avaliableCategories != null && avaliableCategories.Count > 0)
-                return View("~/Plugins/Misc.CategorySpecificationAttribute/Views/_CreateOrUpdateSpecificationAttributeGroup.UsedByCategories.cshtml", specificationAttributeGroupCategoryModel);
-
-            return Content(string.Empty);
+            return View("~/Plugins/Misc.CategorySpecificationAttributeGroup/Views/SpecificationAttribute/_CreateOrUpdateSpecificationAttributeGroup.Categories.cshtml", specificationAttributeGroupCategoryModel);
         }
+
+        #endregion
     }
 }

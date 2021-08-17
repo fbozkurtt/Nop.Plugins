@@ -9,7 +9,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute
     /// <summary>
     /// Rename this file and change to the correct type
     /// </summary>
-    public class CategorySpecAttributePlugin : BasePlugin, IWidgetPlugin
+    public class CategorySpecificationAttributeGroupPlugin : BasePlugin, IWidgetPlugin
     {
         public bool HideInWidgetList => false;
 
@@ -17,7 +17,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute
         {
             if (widgetZone.Equals(AdminWidgetZones.SpecificationAttributeGroupDetailsBlock))
                 return "CategorySpecificationAttributeGroup";
-            if (widgetZone.Equals(AdminWidgetZones.ProductListButtons))
+            if (widgetZone.Equals(PublicWidgetZones.SearchBoxBeforeSearchButton))
                 return "CreateProductButton";
 
             return string.Empty;
@@ -28,7 +28,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute
             return Task.FromResult<IList<string>>(new List<string>
             {
                 AdminWidgetZones.SpecificationAttributeGroupDetailsBlock,
-                AdminWidgetZones.ProductListButtons
+                PublicWidgetZones.SearchBoxBeforeSearchButton
             });
         }
     }

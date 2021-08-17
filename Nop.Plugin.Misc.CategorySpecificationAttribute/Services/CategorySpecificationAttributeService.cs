@@ -13,18 +13,18 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
 {
     public class CategorySpecificationAttributeService : ICategorySpecificationAttributeService
     {
-        private readonly IRepository<CategorySpecificationAttributeGroup> _categorySpecificationAttributeRepository;
+        private readonly IRepository<Domain.CategorySpecificationAttributeGroup> _categorySpecificationAttributeRepository;
         private readonly ICategoryService _categoryService;
         private readonly ISpecificationAttributeService _specificationAttributeService;
 
-        public CategorySpecificationAttributeService(IRepository<CategorySpecificationAttributeGroup> categorySpecificationAttributeRepository, ICategoryService categoryService, ISpecificationAttributeService specificationAttributeService)
+        public CategorySpecificationAttributeService(IRepository<Domain.CategorySpecificationAttributeGroup> categorySpecificationAttributeRepository, ICategoryService categoryService, ISpecificationAttributeService specificationAttributeService)
         {
             _categorySpecificationAttributeRepository = categorySpecificationAttributeRepository;
             _categoryService = categoryService;
             _specificationAttributeService = specificationAttributeService;
         }
 
-        public virtual async Task CreateAsync(CategorySpecificationAttributeGroup model)
+        public virtual async Task CreateAsync(Domain.CategorySpecificationAttributeGroup model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
@@ -46,7 +46,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
             {
                 if (!existingCategorySpecificationAttributeGroups.Any(e => e.CategoryId == categoryId))
                 {
-                    await _categorySpecificationAttributeRepository.InsertAsync(new CategorySpecificationAttributeGroup() { CategoryId = categoryId, SpecificationAttributeGroupId = model.Id });
+                    await _categorySpecificationAttributeRepository.InsertAsync(new Domain.CategorySpecificationAttributeGroup() { CategoryId = categoryId, SpecificationAttributeGroupId = model.Id });
                 }
             }
             //var categories = await _categoryService.GetAllCategoriesAsync() as List<Category>;
@@ -71,11 +71,11 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
             //});
         }
 
-        public async Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId) =>
+        public async Task<IList<Domain.CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId) =>
             await _categorySpecificationAttributeRepository.GetAllAsync(query =>
             query.Where(c => c.SpecificationAttributeGroupId == specificationAttributeGroupId));
 
-        public async Task<IList<CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId) =>
+        public async Task<IList<Domain.CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId) =>
             await _categorySpecificationAttributeRepository.GetAllAsync(query =>
             query.Where(c => c.CategoryId == categoryId));
     }

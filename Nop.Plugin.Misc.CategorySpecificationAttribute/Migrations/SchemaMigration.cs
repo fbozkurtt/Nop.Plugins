@@ -21,7 +21,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Migrations
         /// </summary>
         public override void Up()
         {
-            _migrationManager.BuildTable<CategorySpecificationAttributeGroup>(Create);
+            _migrationManager.BuildTable<Domain.CategorySpecificationAttributeGroup>(Create);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Infrastructure
         public virtual void Register(IServiceCollection services, ITypeFinder typeFinder, AppSettings appSettings)
         {
             services.AddScoped<ICategorySpecificationAttributeService, CategorySpecificationAttributeService>();
-            services.AddScoped<ISpecificationAttributeGroupCategoryModelFactory, SpecificationAttributeGroupCategoryModelFactory>();
+            services.AddScoped<ICategorySpecificationAttributeGroupModelFactory, CategorySpecificationAttributeGroupModelFactory>();
         }
 
         public int Order => 1;

@@ -1,0 +1,324 @@
+﻿@model ProductModel
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services
+@using Nop.Services.Stores
+
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts("Yeni Ürün Ekle");
+    //page class
+    //Html.AppendPageCssClassParts("html-contact-page");
+
+    Html.AddScriptParts(ResourceLocation.Head, "~/lib_npm/jquery/jquery.min.js");
+}
+<script>
+    var pictureId;
+    $(document).ready(function () {
+        document.getElementsByClassName('center-1')[0].classList.add('col');
+    });
+    function loadSpecificationAttributeOptions() {
+        selectedCategoryIds = Array.from(document.getElementById('@Html.IdFor(model => model.SelectedCategoryIds)').options).filter(o => o.selected).map(o => o.value);
+        var selectedCategoryId = selectedCategoryIds[0];
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@Url.Action("GetSpecificationAttributesByCategoryId", "CategorySpecificationAttributeGroup")" + "?categoryId=" + selectedCategoryId,
+            success: function (data, textStatus, jqXHR) {
+                console.log("GET: SpecAttributeOptions")
+                console.log(data);
+                $("#specificationAttributes").empty();
+                var content = '';
+                $.each(data, function (i, attributeGroup) {
+                    var innerContent = '';
+                    $.each(attributeGroup.specificationAttributes, function (j, specificationAttribute) {
+                        var optionContent = '';
+                        $.each(specificationAttribute.options, function (k, option) {
+                            optionContent += '<option value=\"' + option.id + '\">' + option.name + '</option>'
+                        })
+                        innerContent += '<div class=\"form-group\"><label>' + specificationAttribute.name + '</label><select class=\"form-control\" name=\"specificationAttribute\">' + optionContent + '</select></div>';
+                    });
+                    content += '<div class=\"mt-3\"><h4>' + attributeGroup.name + '</h4>' + innerContent + '</div>';
+                    $("#specificationAttributes").append(content);
+                    content = '';
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error ' + textStatus);
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    function saveSpecificationAttributes(productId) {
+        var specificationAttributeOptionIds = [];
+        var specificationAttributesData = document.getElementsByName('specificationAttribute');
+        $.each(specificationAttributesData, function (i, specificationAttribute) {
+            specificationAttributeOptionIds.push(specificationAttribute.value);
+        });
+        var postData = {
+            specificationAttributeOptionIds: specificationAttributeOptionIds,
+            productId: productId
+        }
+        addAntiForgeryToken(postData);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("ProductSpecificationAttributeAdd", "Product")",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                saveProductPicture(productId);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error ' + textStatus);
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    function saveProduct() {
+        $("#save-button").prop("disabled", true);
+        var postData = @Html.Raw(Json.Serialize(Model));
+        var selectedCategoryIds = Array.from(document.getElementById('@Html.IdFor(model => model.SelectedCategoryIds)').options).filter(o => o.selected).map(o => o.value);
+        postData.SelectedCategoryIds = selectedCategoryIds;
+        postData.Name = $('#@Html.IdFor(model => model.Name)').val();
+        postData.ShortDescription = $('#@Html.IdFor(model => model.ShortDescription)').val();
+        postData.Price = $('#@Html.IdFor(model => model.Price)').val();
+        @if (Model.ProductEditorSettingsModel.OldPrice)
+        {
+            <text>
+                postData.OldPrice = $('#@Html.IdFor(model => model.OldPrice)').val();
+            </text>
+        }
+        addAntiForgeryToken(postData);
+        console.log(postData);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@Url.Action("Create", "Product")",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                saveSpecificationAttributes(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error ' + textStatus);
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    function saveProductPicture(productId) {
+        //var pictureId = $("#@Html.IdFor(model => model.AddPictureModel.PictureId)").val();
+        var overrideAltAttribute = $("#@Html.IdFor(model => model.AddPictureModel.OverrideAltAttribute)").val();
+        var overrideTitleAttribute = $("#@Html.IdFor(model => model.AddPictureModel.OverrideTitleAttribute)").val();
+        var displayOrder = $("#@Html.IdFor(model => model.AddPictureModel.DisplayOrder)").val();
+
+        if (pictureId == 0) {
+            $("#addProductPictureAlert").click();
+            return;
+        }
+
+        $('#addProductPicture').attr('disabled', true);
+
+        var postData = {
+            pictureId: pictureId,
+            displayOrder: displayOrder,
+            overrideAltAttribute: overrideAltAttribute,
+            overrideTitleAttribute: overrideTitleAttribute,
+            productId: productId
+        };
+        addAntiForgeryToken(postData);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.Action("ProductPictureAdd", "/Product"))",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                if (!data.Result) {
+                    return;
+                }
+                document.location = '@Url.Action("Index", "Home")';
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            },
+            complete: function (jqXHR, textStatus) {
+                $("#save-button").prop("disabled", false);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#@Html.IdFor(model => model.AddPictureModel.PictureId)').change(function () {
+            var input = document.getElementById('@Html.IdFor(model => model.AddPictureModel.PictureId)');
+            const reader = new FileReader()
+
+            reader.onload = async (event) => {
+                document.getElementById('picturePreview').setAttribute('src', event.target.result)
+            }
+            reader.readAsDataURL(input.files[0])
+            if (input)
+            {
+                var formData = new FormData();
+                formData.append('file', input.files[0]);
+
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "@Url.Action("Upload", "Picture")",
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.success)
+                            pictureId = data.pictureId;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error ' + textStatus);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<div class="page contact-page">
+    <div class="page-title">
+        <h1>Yeni ürün ekle</h1>
+    </div>
+    <div class="page-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Fotoğraf</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ürün Bilgileri</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Onayla</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="card card-default">
+                    <div class="card-header">
+                        @T("Admin.Catalog.Products.Pictures.AddNew")
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <img id="picturePreview" />
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label asp-for="@Model.AddPictureModel.PictureId" />
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="@Model.AddPictureModel.PictureId" type="file" />
+                            </div>
+                        </div>
+                        @*<div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="@Model.AddPictureModel.OverrideAltAttribute" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="@Model.AddPictureModel.OverrideAltAttribute" />
+                                    <span asp-validation-for="@Model.AddPictureModel.OverrideAltAttribute"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="@Model.AddPictureModel.OverrideTitleAttribute" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="@Model.AddPictureModel.OverrideTitleAttribute" />
+                                    <span asp-validation-for="@Model.AddPictureModel.OverrideTitleAttribute"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="@Model.AddPictureModel.DisplayOrder" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="@Model.AddPictureModel.DisplayOrder" />
+                                    <span asp-validation-for="@Model.AddPictureModel.DisplayOrder"></span>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="form-group mt-3">
+                    <nop-label asp-for="@Model.SelectedCategoryIds" />
+                    <nop-select asp-for="@Model.SelectedCategoryIds" asp-items="@Model.AvailableCategories" />
+                    <script>
+                        $(document).ready(function () {
+                            $('#@Html.IdFor(model => model.SelectedCategoryIds)').change(function () {
+                                loadSpecificationAttributeOptions();
+                            });
+                            //loadSpecificationAttributeOptions();
+                        });
+                    </script>
+                </div>
+                <div id="specificationAttributes">
+                </div>
+                @*<div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Yeni
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Yeni ve etiketli
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                        <label class="form-check-label" for="exampleRadios3">
+                            Az kullanılmış
+                        </label>
+                    </div>*@
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <form asp-controller="Product" asp-action="Create" method="post" id="product-form">
+                    <div class="form-group">
+                        <nop-label asp-for="@Model.Name"></nop-label>
+                        <nop-editor asp-for="@Model.Name" asp-required="true"></nop-editor>
+                        <span asp-validation-for="@Model.Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <nop-label asp-for="@Model.ShortDescription"></nop-label>
+                        <nop-textarea class="form-control" asp-for="@Model.ShortDescription" rows="7"></nop-textarea>
+                        <span asp-validation-for="@Model.ShortDescription"></span>
+                    </div>
+                    <div class="form-group" id="product-price-area">
+                        <nop-label asp-for="@Model.Price" />
+                        <nop-editor asp-for="@Model.Price" asp-postfix="@Model.PrimaryStoreCurrencyCode" />
+                        <span asp-validation-for="@Model.Price"></span>
+                    </div>
+                    @if (Model.ProductEditorSettingsModel.OldPrice)
+                    {
+                        <div class="form-group">
+                            <nop-label asp-for="@Model.OldPrice" />
+                            <nop-editor asp-for="@Model.OldPrice" asp-postfix="@Model.PrimaryStoreCurrencyCode" />
+                            <span asp-validation-for="@Model.OldPrice"></span>
+                        </div>
+                    }
+                    <button type="button" name="save" class="btn btn-primary" onclick="saveProduct()" id="save-button">
+                        <i class="far fa-save"></i>
+                        @T("Admin.Common.Save")
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

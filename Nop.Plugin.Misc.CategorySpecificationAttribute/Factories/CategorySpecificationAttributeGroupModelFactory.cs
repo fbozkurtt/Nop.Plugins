@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Factories
 {
-    public class SpecificationAttributeGroupCategoryModelFactory : ISpecificationAttributeGroupCategoryModelFactory
+    public class CategorySpecificationAttributeGroupModelFactory : ICategorySpecificationAttributeGroupModelFactory
     {
         private readonly IBaseAdminModelFactory _baseAdminModelFactory;
         private readonly ICategorySpecificationAttributeService _categorySpecificationAttributeService;
 
-        public SpecificationAttributeGroupCategoryModelFactory(IBaseAdminModelFactory baseAdminModelFactory, ICategorySpecificationAttributeService categorySpecificationAttributeService)
+        public CategorySpecificationAttributeGroupModelFactory(IBaseAdminModelFactory baseAdminModelFactory, ICategorySpecificationAttributeService categorySpecificationAttributeService)
         {
             _baseAdminModelFactory = baseAdminModelFactory;
             _categorySpecificationAttributeService = categorySpecificationAttributeService;

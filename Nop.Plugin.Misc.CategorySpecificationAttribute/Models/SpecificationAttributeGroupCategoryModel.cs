@@ -15,10 +15,12 @@ namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Models
             SelectedCategoryIds = new List<int>();
             AvailableCategories = new List<SelectListItem>();
         }
+
         public int Id { get; set; }
 
         [NopResourceDisplayName("Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.Fields.Name")]
         public IList<int> SelectedCategoryIds { get; set; }
+
         public IList<SelectListItem> AvailableCategories { get; set; }
     }
 }

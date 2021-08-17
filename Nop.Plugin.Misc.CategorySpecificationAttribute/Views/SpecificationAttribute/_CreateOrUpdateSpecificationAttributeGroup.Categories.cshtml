@@ -14,13 +14,12 @@
         $.ajax({
             cache: false,
             type: "POST",
-            url: "@Url.Action("Create", "CategorySpecificationAttribute")",
+            url: "@Url.Action("Create", "CategorySpecificationAttributeGroup")",
             data: postData,
-            dataType: "json",
-            done: function (data, textStatus, jqXHR) {
+            success: function (data, textStatus, jqXHR) {
                 alert('Updated');
             },
-            fail: function (jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error');
             },
             complete: function (jqXHR, textStatus) {

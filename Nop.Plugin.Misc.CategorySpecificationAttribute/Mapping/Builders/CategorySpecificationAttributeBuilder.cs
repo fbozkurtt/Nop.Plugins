@@ -6,14 +6,14 @@ using Nop.Plugin.Misc.CategorySpecAttribute.Domain;
 
 namespace Nop.Plugin.Misc.CategorySpecAttribute.Mapping.Builders
 {
-    public class CategorySpecificationAttributGroupBuilder : NopEntityBuilder<CategorySpecificationAttributeGroup>
+    public class CategorySpecificationAttributGroupBuilder : NopEntityBuilder<Domain.CategorySpecificationAttributeGroup>
     {
         #region Methods
 
         public override void MapEntity(CreateTableExpressionBuilder table)
         {
-            table.WithColumn(nameof(CategorySpecificationAttributeGroup.CategoryId)).AsInt32().Nullable().ForeignKey<Category>();
-            table.WithColumn(nameof(CategorySpecificationAttributeGroup.SpecificationAttributeGroupId)).AsInt32().Nullable().ForeignKey<SpecificationAttributeGroup>();
+            table.WithColumn(nameof(Domain.CategorySpecificationAttributeGroup.CategoryId)).AsInt32().Nullable().ForeignKey<Category>();
+            table.WithColumn(nameof(Domain.CategorySpecificationAttributeGroup.SpecificationAttributeGroupId)).AsInt32().Nullable().ForeignKey<SpecificationAttributeGroup>();
         }
 
         #endregion

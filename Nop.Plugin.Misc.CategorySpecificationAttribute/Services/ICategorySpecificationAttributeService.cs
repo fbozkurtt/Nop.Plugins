@@ -11,12 +11,12 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Services
 {
     public interface ICategorySpecificationAttributeService
     {
-        Task CreateAsync(CategorySpecificationAttributeGroup model);
+        Task CreateAsync(Domain.CategorySpecificationAttributeGroup model);
 
         Task CreateAsync(SpecificationAttributeGroupCategoryModel model);
 
-        Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId);
+        Task<IList<Domain.CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId);
 
-        Task<IList<CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId);
+        Task<IList<Domain.CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId);
     }
 }
