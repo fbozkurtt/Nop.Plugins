@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nop.Plugin.Misc.CategorySpecificationAttributeGroup", "Nop.Plugin.Misc.CategorySpecificationAttribute\Nop.Plugin.Misc.CategorySpecificationAttributeGroup.csproj", "{556C07B4-DDF7-4C7C-A2DD-A95A8DE6B0AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nop.Plugin.Misc.AdvancedSpecificationAttributes", "Nop.Plugin.Misc.AdvancedSpecificationAttributes\Nop.Plugin.Misc.AdvancedSpecificationAttributes.csproj", "{556C07B4-DDF7-4C7C-A2DD-A95A8DE6B0AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
