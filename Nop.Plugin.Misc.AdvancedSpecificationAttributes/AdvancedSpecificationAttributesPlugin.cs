@@ -5,7 +5,7 @@ using Nop.Web.Framework.Infrastructure;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Nop.Plugin.Misc.CategorySpecAttribute
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes
 {
     /// <summary>
     /// Rename this file and change to the correct type
@@ -38,6 +38,10 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute
         {
             if (widgetZone.Equals(AdminWidgetZones.SpecificationAttributeGroupDetailsBlock))
                 return "CategorySpecificationAttributeGroup";
+
+            if (widgetZone.Equals(AdminWidgetZones.SpecificationAttributeDetailsBlock))
+                return AdvancedSpecificationAttributesDefaults.CUSTOM_SPECIFICATION_ATTRIBUTE_VIEW_COMPONENT_NAME;
+
             if (widgetZone.Equals(PublicWidgetZones.SearchBoxBeforeSearchButton))
                 return "CreateProductButton";
 
