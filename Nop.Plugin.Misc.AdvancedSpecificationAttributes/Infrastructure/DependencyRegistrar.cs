@@ -21,6 +21,7 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Infrastructure
             services.AddScoped<ICustomSpecificationAttributeService, CustomSpecificationAttributeService>();
             services.AddScoped<ICategorySpecificationAttributeGroupModelFactory, CategorySpecificationAttributeGroupModelFactory>();
             services.AddScoped<ICustomSpecificationAttributeModelFactory, CustomSpecificationAttributeModelFactory>();
+            services.AddScoped<ICustomSpecificationAttributeParser, CustomSpecificationAttributeParser>();
         }
 
         public int Order => 1;

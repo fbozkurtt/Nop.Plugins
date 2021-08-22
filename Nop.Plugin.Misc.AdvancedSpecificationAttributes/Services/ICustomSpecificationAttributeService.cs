@@ -26,7 +26,21 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         #region Methods
 
+        Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute model);
+
         Task<CustomSpecificationAttribute> GetBySpecificationAttributeIdAsync(int specificationAttributeId);
+
+        Task<CustomSpecificationAttribute> GetCustomSpecificationAttributeByIdAsync(int customSpecificationAttributeId);
+
+        Task<IList<CustomSpecificationAttribute>> GetAllCustomSpecificationAttributesAsync();
+
+        #region Custom specification attribute options
+
+        //Task<CustomSpecificationAttributeOption> GetCustomSpecificationAttributeOptionByIdAsync(int customSpecificationAttributeOptionId);
+
+        //Task<IList<CustomSpecificationAttributeOption>> GetCustomSpecificationAttributeOptionsBySpecificationAttributeIdAsync(int customSpecificationAttributeId);
+
+        #endregion
 
         #endregion
     }

@@ -1,33 +1,304 @@
 ﻿@model CustomSpecificationAttributeModel
 
-<div class="card-body">
-    <div class="form-group row">
-        <div class="col-md-3">
-            <nop-label asp-for="@Model.AttributeControlTypeId" />
-        </div>
-        <div class="col-md-9">
-            @{
-                var attributeControlTypes = await ((AttributeControlType)Model.AttributeControlTypeId)
-                    .ToSelectListAsync(valuesToExclude:
-                        //these attributes don't support some control types
-                        new[] { (int)AttributeControlType.ImageSquares });
-            }
-            <nop-select asp-for="@Model.AttributeControlTypeId" asp-items="@attributeControlTypes" />
-            <span asp-validation-for="@Model.AttributeControlTypeId"></span>
-        </div>
-    </div>
+@{
+    const string hidePluginBlockAttributeGroupName = "SpecificationAttributePage.HidePluginBlock";
+    var hidePluginBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hidePluginBlockAttributeGroupName);
+}
 
-    <div class="form-group row">
-        <div class="col-md-3">
-            <nop-label asp-for="@Model.AttributeFilterTypeId" />
+<nop-card asp-name="specification-attribute-plugin" asp-icon="fas fa-plug" asp-title="Plugin" asp-hide-block-attribute-name="@hidePluginBlockAttributeGroupName" asp-hide="@hidePluginBlock" asp-advanced="false">
+    @if (Model.SpecificationAttributeId > 0)
+    {
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.IsRequired" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.IsRequired" />
+                <span asp-validation-for="@Model.IsRequired"></span>
+            </div>
         </div>
-        <div class="col-md-9">
-            @{
-                var attributeFilterTypes = await ((AttributeFilterType)Model.AttributeFilterTypeId)
-                    .ToSelectListAsync();
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.AttributeControlTypeId" />
+            </div>
+            <div class="col-md-9">
+                @{
+                    var attributeControlTypes = await ((AttributeControlType)Model.AttributeControlTypeId)
+                        .ToSelectListAsync(valuesToExclude:
+                            //these attributes don't support some control types
+                            new[] { (int)AttributeControlType.ImageSquares });
+                }
+                <nop-select asp-for="@Model.AttributeControlTypeId" asp-items="@attributeControlTypes" />
+                <span asp-validation-for="@Model.AttributeControlTypeId"></span>
+            </div>
+        </div>
+        @(await Html.LocalizedEditorAsync<CustomSpecificationAttributeModel, CustomSpecificationAttributeLocalizedModel>("pnlDefaultValueLocalized",
+            @<div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="@Model.Locales[item].DefaultValue" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="@Model.Locales[item].DefaultValue" />
+                        <span asp-validation-for="@Model.Locales[item].DefaultValue"></span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="@Model.Locales[item].LanguageId" />
+            </div>
+        ,
+            @<div>
+                <div class="form-group row" id="pnlDefaultValue">
+                    <div class="col-md-3">
+                        <nop-label asp-for="@Model.DefaultValue" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="@Model.DefaultValue" />
+                        <span asp-validation-for="@Model.DefaultValue"></span>
+                    </div>
+                </div>
+            </div>))
+
+        <div class="form-group row" id="pnlValidationMinLength">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationMinLength" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationMinLength" />
+                <span asp-validation-for="@Model.ValidationMinLength"></span>
+            </div>
+        </div>
+        <div class="form-group row" id="pnlValidationMaxLength">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationMaxLength" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationMaxLength" />
+                <span asp-validation-for="@Model.ValidationMaxLength"></span>
+            </div>
+        </div>
+        <div class="form-group row" id="pnlValidationFileAllowedExtensions">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationFileAllowedExtensions" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationFileAllowedExtensions" />
+                <span asp-validation-for="@Model.ValidationFileAllowedExtensions"></span>
+            </div>
+        </div>
+        <div class="form-group row" id="pnlValidationFileMaximumSize">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationFileMaximumSize" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationFileMaximumSize" />
+                <span asp-validation-for="@Model.ValidationFileMaximumSize"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.AttributeFilterTypeId" />
+            </div>
+            <div class="col-md-9">
+                @{
+                    var attributeFilterTypes = await ((AttributeFilterType)Model.AttributeFilterTypeId)
+                        .ToSelectListAsync();
+                }
+                <nop-select asp-for="@Model.AttributeFilterTypeId" asp-items="@attributeFilterTypes" />
+                <span asp-validation-for="@Model.AttributeFilterTypeId"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ConditionModel.EnableCondition" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ConditionModel.EnableCondition" />
+                <span asp-validation-for="@Model.ConditionModel.EnableCondition"></span>
+            </div>
+        </div>
+        <nop-nested-setting asp-for="@Model.ConditionModel.EnableCondition" id="pnlAttributes">
+            <script>
+                $(document).ready(function () {
+                    $("#@Html.IdFor(model => model.ConditionModel.EnableCondition)").click(toggleEnableCondition);
+                    toggleEnableCondition();
+                });
+
+                function toggleEnableCondition() {
+                    if ($('#@Html.IdFor(model => model.ConditionModel.EnableCondition)').is(':checked')) {
+                        $('#pnlAttributes').showElement();
+                    } else {
+                        $('#pnlAttributes').hideElement();
+                    }
+                }
+            </script>
+            @if (Model.ConditionModel.ConditionAttributes.Count > 0)
+            {
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="@Model.ConditionModel.SelectedAttributeId" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-select asp-for="@Model.ConditionModel.SelectedAttributeId" asp-items="@(Model.ConditionModel.ConditionAttributes.Select(x => new SelectListItem() {Text = x.Name, Value = x.Id.ToString()}))" />
+
+                        <script>
+                            $(document).ready(function() {
+                                $("#@Html.IdFor(model => model.ConditionModel.SelectedAttributeId)")
+                                    .change(toggleConditionAttributes);
+
+                                toggleConditionAttributes();
+                            });
+
+                            function toggleConditionAttributes() {
+                                var selectedCheckoutAttributeId =
+                                    $("#@Html.IdFor(model => model.ConditionModel.SelectedAttributeId)").val();
+                                $('[id^="pnl_attribute_values_"]').hideElement();
+                                $('#pnl_attribute_values_' + selectedCheckoutAttributeId).showElement();
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">&nbsp;</div>
+                    <div class="col-md-9">
+                        @for (var i = 0; i < Model.ConditionModel.ConditionAttributes.Count; i++)
+                        {
+                            <input type="hidden" asp-for="@Model.ConditionModel.ConditionAttributes[i].Id" />
+                            <div id="@($"pnl_attribute_values_{Model.ConditionModel.ConditionAttributes[i].Id}")">
+                                @switch (Model.ConditionModel.ConditionAttributes[i].AttributeControlType)
+                                {
+                                    case AttributeControlType.DropdownList:
+                                        <nop-select asp-for="@Model.ConditionModel.ConditionAttributes[i].SelectedValueId" asp-items="@Model.ConditionModel.ConditionAttributes[i].Options" />
+                                        break;
+                                    case AttributeControlType.RadioList:
+                                    case AttributeControlType.ColorSquares:
+                                    case AttributeControlType.ImageSquares:
+                                        foreach (var option in Model.ConditionModel.ConditionAttributes[i].Options)
+                                        {
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" asp-for="@Model.ConditionModel.ConditionAttributes[i].SelectedValueId" value="@option.Value" checked="@option.Selected">
+                                                    @option.Text
+                                                </label>
+                                            </div>
+                                        }
+                                        break;
+                                    case AttributeControlType.Checkboxes:
+                                        for (var j = 0; j < Model.ConditionModel.ConditionAttributes[i].Options.Count; j++)
+                                        {
+
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="hidden" asp-for="@Model.ConditionModel.ConditionAttributes[i].Options[j].Value" />
+                                                    <input class="form-check-input" type="checkbox" asp-for="@Model.ConditionModel.ConditionAttributes[i].Options[j].Selected" />
+                                                    @Model.ConditionModel.ConditionAttributes[i].Options[j].Text
+                                                </label>
+                                            </div>
+                                        }
+                                        break;
+                                    case AttributeControlType.ReadonlyCheckboxes:
+                                    case AttributeControlType.TextBox:
+                                    case AttributeControlType.MultilineTextbox:
+                                    case AttributeControlType.Datepicker:
+                                    case AttributeControlType.FileUpload:
+                                    default:
+                                        //not supported as conditions
+                                        break;
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
             }
-            <nop-select asp-for="@Model.AttributeFilterTypeId" asp-items="@attributeFilterTypes" />
-            <span asp-validation-for="@Model.AttributeFilterTypeId"></span>
+            else
+            {
+                <div class="form-group row">
+                    <div class="col-md-9 offset-md-3 mt-3">
+                        @T("Admin.Catalog.Attributes.CheckoutAttributes.Condition.NoAttributeExists")
+                    </div>
+                </div>
+            }
+        </nop-nested-setting>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <button type="button" name="save-plugin" class="btn btn-primary float-right">
+                    <i class="far fa-save"></i>
+                    @T("Admin.Common.Save")
+                </button>
+            </div>
         </div>
     </div>
-</div>
+    }
+    else
+    {
+        <div class="card-body">
+            @T("Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.SaveBeforeEdit")
+        </div>
+    }
+</nop-card>
+
+<script>
+    $(document).ready(function() {
+
+        $("#@Html.IdFor(model => model.AttributeControlTypeId)").change(toggleAttributeControlType);
+
+        toggleAttributeControlType();
+    });
+
+    function toggleAttributeControlType() {
+        var selectedAttributeControlTypeId = $("#@Html.IdFor(model => model.AttributeControlTypeId)").val();
+        //validation
+        if (selectedAttributeControlTypeId == @(((int) AttributeControlType.TextBox).ToString())) {
+            $('#pnlValidationMinLength').showElement();
+            $('#pnlValidationMaxLength').showElement();
+            $('#pnlValidationFileMaximumSize').hideElement();
+            $('#pnlValidationFileAllowedExtensions').hideElement();
+            $('#pnlDefaultValueLocalized').showElement();
+            $('#pnlDefaultValue').showElement();
+        } else if (selectedAttributeControlTypeId == @(((int) AttributeControlType.MultilineTextbox).ToString())) {
+            $('#pnlValidationMinLength').showElement();
+            $('#pnlValidationMaxLength').showElement();
+            $('#pnlValidationFileMaximumSize').hideElement();
+            $('#pnlValidationFileAllowedExtensions').hideElement();
+            $('#pnlDefaultValueLocalized').showElement();
+            $('#pnlDefaultValue').showElement();
+        } else if (selectedAttributeControlTypeId == @(((int) AttributeControlType.FileUpload).ToString())) {
+            $('#pnlValidationMinLength').hideElement();
+            $('#pnlValidationMaxLength').hideElement();
+            $('#pnlValidationFileMaximumSize').showElement();
+            $('#pnlValidationFileAllowedExtensions').showElement();
+            $('#pnlDefaultValueLocalized').hideElement();
+            $('#pnlDefaultValue').hideElement();
+            $("#@Html.IdFor(model => model.DefaultValue)").val('');
+            @for (var item = 0; item < Model.Locales.Count; item++)
+            {
+                <text>$("#@Html.IdFor(model => model.Locales[item].DefaultValue)").val('');</text>
+            }
+        } else {
+            $('#pnlValidationMinLength').hideElement();
+            $('#pnlValidationMaxLength').hideElement();
+            $('#pnlValidationFileMaximumSize').hideElement();
+            $('#pnlValidationFileAllowedExtensions').hideElement();
+            $('#pnlDefaultValueLocalized').hideElement();
+            $('#pnlDefaultValue').hideElement();
+            $("#@Html.IdFor(model => model.DefaultValue)").val('');
+            @for (var item = 0; item < Model.Locales.Count; item++)
+            {
+                <text>$("#@Html.IdFor(model => model.Locales[item].DefaultValue)").val('');</text>
+            }
+        }
+
+        //values
+        if (selectedAttributeControlTypeId == @(((int) AttributeControlType.DropdownList).ToString()) ||
+            selectedAttributeControlTypeId == @(((int) AttributeControlType.RadioList).ToString()) ||
+            selectedAttributeControlTypeId == @(((int) AttributeControlType.Checkboxes).ToString()) ||
+            selectedAttributeControlTypeId == @(((int) AttributeControlType.ColorSquares).ToString()) ||
+            selectedAttributeControlTypeId == @(((int) AttributeControlType.ImageSquares).ToString()) ||
+            selectedAttributeControlTypeId == @(((int) AttributeControlType.ReadonlyCheckboxes).ToString())) {
+            $('[data-card-name=specification-attribute-options]').showElement();
+        } else {
+            $('[data-card-name=specification-attribute-options]').hideElement();
+        }
+    }
+
+</script>

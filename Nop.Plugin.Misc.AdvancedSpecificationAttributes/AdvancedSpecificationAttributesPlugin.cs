@@ -1,4 +1,8 @@
-﻿using Nop.Services.Cms;
+﻿using Nop.Core.Domain.Catalog;
+using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
+using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services;
+using Nop.Services.Catalog;
+using Nop.Services.Cms;
 using Nop.Services.Localization;
 using Nop.Services.Plugins;
 using Nop.Web.Framework.Infrastructure;
@@ -15,13 +19,18 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes
         #region Fields
 
         private readonly ILocalizationService _localizationService;
+        private readonly ISpecificationAttributeService _specificationAttributeService;
+        private readonly ICustomSpecificationAttributeService _customSpecificationAttributeService;
 
         #endregion
+
         #region Ctor
 
-        public AdvancedSpecificationAttributesPlugin(ILocalizationService localizationService)
+        public AdvancedSpecificationAttributesPlugin(ILocalizationService localizationService, ISpecificationAttributeService specificationAttributeService, ICustomSpecificationAttributeService customSpecificationAttributeService)
         {
             _localizationService = localizationService;
+            _specificationAttributeService = specificationAttributeService;
+            _customSpecificationAttributeService = customSpecificationAttributeService;
         }
 
         #endregion
@@ -69,6 +78,17 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes
             //    ["Plugins.DiscountRules.CustomerRoles.Fields.CustomerRoleId.Required"] = "Customer role is required",
             //    ["Plugins.DiscountRules.CustomerRoles.Fields.DiscountId.Required"] = "Discount is required"
             //});
+
+            foreach (var specificationAttribute in (await _specificationAttributeService.GetSpecificationAttributesAsync()))
+            {
+                await _customSpecificationAttributeService.InsertCustomSpecificationAttributeAsync(new CustomSpecificationAttribute()
+                {
+                    SpecificationAttributeId = specificationAttribute.Id,
+                    IsRequired = false,
+                    AttributeControlType = AttributeControlType.DropdownList,
+                    AttributeFilterType = AttributeFilterType.Checkboxes
+                });
+            }
 
             await base.InstallAsync();
         }

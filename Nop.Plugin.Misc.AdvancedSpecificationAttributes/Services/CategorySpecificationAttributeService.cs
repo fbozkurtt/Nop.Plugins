@@ -24,7 +24,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
             _specificationAttributeService = specificationAttributeService;
         }
 
-        public virtual async Task CreateAsync(CategorySpecificationAttributeGroup model)
+        public async Task CreateAsync(CategorySpecificationAttributeGroup model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));

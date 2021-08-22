@@ -16,11 +16,30 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         #endregion
 
+        #region Ctor
+
+        public CustomSpecificationAttributeService(IRepository<CustomSpecificationAttribute> customSpecificationAttributeRepository)
+        {
+            _customSpecificationAttributeRepository = customSpecificationAttributeRepository;
+        }
+
+        #endregion
+
         #region Methods
 
+        public async Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute model) =>
+            await _customSpecificationAttributeRepository.InsertAsync(model);
+
         public async Task<CustomSpecificationAttribute> GetBySpecificationAttributeIdAsync(int specificationAttributeId) =>
-            (await _customSpecificationAttributeRepository.GetAllAsync(query => 
+            (await _customSpecificationAttributeRepository.GetAllAsync(query =>
                 query.Where(s => s.SpecificationAttributeId == specificationAttributeId))).FirstOrDefault();
+
+        public async Task<CustomSpecificationAttribute> GetCustomSpecificationAttributeByIdAsync(int customSpecificationAttributeId) =>
+            await _customSpecificationAttributeRepository.GetByIdAsync(customSpecificationAttributeId);
+
+        public async Task<IList<CustomSpecificationAttribute>> GetAllCustomSpecificationAttributesAsync() => 
+            await (await _customSpecificationAttributeRepository.GetAllAsync(query =>
+                query)).ToListAsync();
 
         #endregion
     }

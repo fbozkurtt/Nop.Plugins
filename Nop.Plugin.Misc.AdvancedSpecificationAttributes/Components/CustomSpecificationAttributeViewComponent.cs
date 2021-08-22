@@ -46,7 +46,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Components
             var customSpecificationAttributeModel = await _customSpecificationAttributeModelFactory
                 .PrepareCustomSpecificationAttributeModelAsync(new CustomSpecificationAttributeModel()
                 {
-                    Id = model.Id
+                    Id = model.Id,
+                    SpecificationAttributeId = model.Id
                 },
                 customSpesificationAttribute);
 

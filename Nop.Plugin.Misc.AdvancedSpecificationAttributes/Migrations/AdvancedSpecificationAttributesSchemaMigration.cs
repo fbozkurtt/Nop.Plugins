@@ -6,7 +6,7 @@ using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
 namespace Nop.Plugin.Misc.CategorySpecAttribute.Migrations
 {
     [SkipMigrationOnUpdate]
-    [NopMigration("2021/08/05 22:05:19:0000000", "Nop.Plugin.Misc.CategorySpecAttribute schema")]
+    [NopMigration("2021/08/23 22:05:19:0000000", "Nop.Plugin.Misc.AdvancedSpecificationAttributes schema")]
     public class AdvancedSpecificationAttributesSchemaMigration : AutoReversingMigration
     {
         private readonly IMigrationManager _migrationManager;
@@ -16,9 +16,6 @@ namespace Nop.Plugin.Misc.CategorySpecAttribute.Migrations
             _migrationManager = migrationManager;
         }
 
-        /// <summary>
-        /// Collect the UP migration expressions
-        /// </summary>
         public override void Up()
         {
             _migrationManager.BuildTable<CategorySpecificationAttributeGroup>(Create);
