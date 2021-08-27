@@ -22,7 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Controllers
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
 {
     [AutoValidateAntiforgeryToken]
     [ValidateIpAddress]

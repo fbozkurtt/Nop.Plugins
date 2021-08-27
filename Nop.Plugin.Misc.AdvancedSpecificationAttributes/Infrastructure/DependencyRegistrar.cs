@@ -5,7 +5,7 @@ using Nop.Core.Infrastructure.DependencyManagement;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Factories;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services;
 
-namespace Nop.Plugin.Misc.CategorySpecAttribute.Infrastructure
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
 {
     public class DependencyRegistrar : IDependencyRegistrar
     {

@@ -3,10 +3,10 @@ using FluentMigrator.Infrastructure;
 using Nop.Data.Migrations;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
 
-namespace Nop.Plugin.Misc.CategorySpecAttribute.Migrations
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Migrations
 {
     [SkipMigrationOnUpdate]
-    [NopMigration("2021/08/23 22:05:19:0000000", "Nop.Plugin.Misc.AdvancedSpecificationAttributes schema")]
+    [NopMigration("2021/08/24 22:05:19:0000000", "Nop.Plugin.Misc.AdvancedSpecificationAttributes schema")]
     public class AdvancedSpecificationAttributesSchemaMigration : AutoReversingMigration
     {
         private readonly IMigrationManager _migrationManager;

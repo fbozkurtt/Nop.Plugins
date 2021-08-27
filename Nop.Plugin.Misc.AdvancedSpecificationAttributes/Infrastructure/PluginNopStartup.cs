@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nop.Core.Infrastructure;
 
-namespace Nop.Plugin.Misc.CategorySpecAttribute.Infrastructure
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
 {
     public class PluginNopStartup : INopStartup
     {

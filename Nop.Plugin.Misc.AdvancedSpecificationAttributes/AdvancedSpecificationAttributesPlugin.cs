@@ -1,5 +1,4 @@
-﻿using Nop.Core.Domain.Catalog;
-using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
+﻿using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services;
 using Nop.Services.Catalog;
 using Nop.Services.Cms;

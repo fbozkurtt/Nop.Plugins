@@ -1,5 +1,4 @@
-﻿using Nop.Core.Domain.Catalog;
-using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
+﻿using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

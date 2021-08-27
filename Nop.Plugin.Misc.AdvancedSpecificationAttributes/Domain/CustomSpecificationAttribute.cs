@@ -1,5 +1,4 @@
 ﻿using Nop.Core;
-using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Localization;
 
 namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain
@@ -12,6 +11,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain
 
         public string ConditionAttributeXml { get; set; }
 
+        // Validation
+
         public int? ValidationMinLength { get; set; }
 
         public int? ValidationMaxLength { get; set; }
@@ -19,6 +20,15 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain
         public string ValidationFileAllowedExtensions { get; set; }
 
         public int? ValidationFileMaximumSize { get; set; }
+
+        public int? ValidationNumericMaximumValue { get; set; }
+
+        public int? ValidationNumericMinimumValue { get; set; }
+
+        public decimal? ValidationDecimalMaximumValue { get; set; }
+
+        public decimal? ValidationDecimalMinimumValue { get; set; }
+
 
         public string DefaultValue { get; set; }
 

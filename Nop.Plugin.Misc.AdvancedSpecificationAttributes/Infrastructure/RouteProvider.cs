@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nop.Plugin.Misc.CategorySpecificationAttribute.Infrastructure
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
 {
     public class RouteProvider : IRouteProvider
     {

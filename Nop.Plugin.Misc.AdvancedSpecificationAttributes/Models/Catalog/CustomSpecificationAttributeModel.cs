@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Nop.Core.Domain.Catalog;
+using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
 using Nop.Web.Areas.Admin.Models.Catalog;
 using Nop.Web.Framework.Models;
 using Nop.Web.Framework.Mvc.ModelBinding;
@@ -46,6 +46,18 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Attributes.CheckoutAttributes.Fields.FileMaximumSize")]
         [UIHint("Int32Nullable")]
         public int? ValidationFileMaximumSize { get; set; }
+
+        [UIHint("Int32Nullable")]
+        public int? ValidationNumericMaximumValue { get; set; }
+
+        [UIHint("Int32Nullable")]
+        public int? ValidationNumericMinimumValue { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Attributes.CheckoutAttributes.Fields.MaxLength")]
+        public decimal? ValidationDecimalMaximumValue { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Attributes.CheckoutAttributes.Fields.MinLength")]
+        public decimal? ValidationDecimalMinimumValue { get; set; }
 
         [NopResourceDisplayName("Admin.Catalog.Attributes.CheckoutAttributes.Fields.DefaultValue")]
         public string DefaultValue { get; set; }

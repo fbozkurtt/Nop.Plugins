@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nop.Plugin.Misc.CategorySpecAttribute.Infrastructure
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
 {
     public class ViewLocationExpander : IViewLocationExpander
     {

@@ -59,6 +59,42 @@
                 </div>
             </div>))
 
+        <div class="form-group row" id="pnlValidationNumericMinimumValue">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationNumericMinimumValue" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationNumericMinimumValue" />
+                <span asp-validation-for="@Model.ValidationNumericMinimumValue"></span>
+            </div>
+        </div>
+        <div class="form-group row" id="pnlValidationNumericMaximumValue">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationNumericMaximumValue" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationNumericMaximumValue" />
+                <span asp-validation-for="@Model.ValidationNumericMaximumValue"></span>
+            </div>
+        </div>
+        <div class="form-group row" id="pnlValidationDecimalMinimumValue">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationDecimalMinimumValue" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationDecimalMinimumValue" />
+                <span asp-validation-for="@Model.ValidationDecimalMinimumValue"></span>
+            </div>
+        </div>
+        <div class="form-group row" id="pnlValidationDecimalMaximumValue">
+            <div class="col-md-3">
+                <nop-label asp-for="@Model.ValidationDecimalMaximumValue" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="@Model.ValidationDecimalMaximumValue" />
+                <span asp-validation-for="@Model.ValidationDecimalMaximumValue"></span>
+            </div>
+        </div>
         <div class="form-group row" id="pnlValidationMinLength">
             <div class="col-md-3">
                 <nop-label asp-for="@Model.ValidationMinLength" />
@@ -95,7 +131,7 @@
                 <span asp-validation-for="@Model.ValidationFileMaximumSize"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row" id="pnlAttributeFilterType">
             <div class="col-md-3">
                 <nop-label asp-for="@Model.AttributeFilterTypeId" />
             </div>
@@ -241,14 +277,24 @@
     $(document).ready(function() {
 
         $("#@Html.IdFor(model => model.AttributeControlTypeId)").change(toggleAttributeControlType);
+        //$("#@Html.IdFor(model => model.AttributeFilterTypeId)").change(toggleAttributeFilterType);
 
+        $('#specificationattribute-form').submit(function (event) {
+            console.log(event);
+            event.preventDefault();
+        });
         toggleAttributeControlType();
+        toggleAttributeFilterType();
     });
 
     function toggleAttributeControlType() {
         var selectedAttributeControlTypeId = $("#@Html.IdFor(model => model.AttributeControlTypeId)").val();
         //validation
         if (selectedAttributeControlTypeId == @(((int) AttributeControlType.TextBox).ToString())) {
+            $('#pnlValidationNumericMinimumValue').hideElement();
+            $('#pnlValidationNumericMaximumValue').hideElement();
+            $('#pnlValidationDecimalMinimumValue').hideElement();
+            $('#pnlValidationDecimalMaximumValue').hideElement();
             $('#pnlValidationMinLength').showElement();
             $('#pnlValidationMaxLength').showElement();
             $('#pnlValidationFileMaximumSize').hideElement();
@@ -256,6 +302,10 @@
             $('#pnlDefaultValueLocalized').showElement();
             $('#pnlDefaultValue').showElement();
         } else if (selectedAttributeControlTypeId == @(((int) AttributeControlType.MultilineTextbox).ToString())) {
+            $('#pnlValidationNumericMinimumValue').hideElement();
+            $('#pnlValidationNumericMaximumValue').hideElement();
+            $('#pnlValidationDecimalMinimumValue').hideElement();
+            $('#pnlValidationDecimalMaximumValue').hideElement();
             $('#pnlValidationMinLength').showElement();
             $('#pnlValidationMaxLength').showElement();
             $('#pnlValidationFileMaximumSize').hideElement();
@@ -263,6 +313,10 @@
             $('#pnlDefaultValueLocalized').showElement();
             $('#pnlDefaultValue').showElement();
         } else if (selectedAttributeControlTypeId == @(((int) AttributeControlType.FileUpload).ToString())) {
+            $('#pnlValidationNumericMinimumValue').hideElement();
+            $('#pnlValidationNumericMaximumValue').hideElement();
+            $('#pnlValidationDecimalMinimumValue').hideElement();
+            $('#pnlValidationDecimalMaximumValue').hideElement();
             $('#pnlValidationMinLength').hideElement();
             $('#pnlValidationMaxLength').hideElement();
             $('#pnlValidationFileMaximumSize').showElement();
@@ -274,7 +328,33 @@
             {
                 <text>$("#@Html.IdFor(model => model.Locales[item].DefaultValue)").val('');</text>
             }
+        } else if (selectedAttributeControlTypeId == @(((int) AttributeControlType.Numeric).ToString())) {
+            $('#pnlValidationNumericMinimumValue').showElement();
+            $('#pnlValidationNumericMaximumValue').showElement();
+            $('#pnlValidationDecimalMinimumValue').hideElement();
+            $('#pnlValidationDecimalMaximumValue').hideElement();
+            $('#pnlValidationMinLength').hideElement();
+            $('#pnlValidationMaxLength').hideElement();
+            $('#pnlValidationFileMaximumSize').hideElement();
+            $('#pnlValidationFileAllowedExtensions').hideElement();
+            $('#pnlDefaultValueLocalized').hideElement();
+            $('#pnlDefaultValue').hideElement();
+        } else if (selectedAttributeControlTypeId == @(((int) AttributeControlType.Decimal).ToString())) {
+            $('#pnlValidationNumericMinimumValue').hideElement();
+            $('#pnlValidationNumericMaximumValue').hideElement();
+            $('#pnlValidationDecimalMinimumValue').showElement();
+            $('#pnlValidationDecimalMaximumValue').showElement();
+            $('#pnlValidationMinLength').hideElement();
+            $('#pnlValidationMaxLength').hideElement();
+            $('#pnlValidationFileMaximumSize').hideElement();
+            $('#pnlValidationFileAllowedExtensions').hideElement();
+            $('#pnlDefaultValueLocalized').hideElement();
+            $('#pnlDefaultValue').hideElement();
         } else {
+            $('#pnlValidationNumericMinimumValue').hideElement();
+            $('#pnlValidationNumericMaximumValue').hideElement();
+            $('#pnlValidationDecimalMinimumValue').hideElement();
+            $('#pnlValidationDecimalMaximumValue').hideElement();
             $('#pnlValidationMinLength').hideElement();
             $('#pnlValidationMaxLength').hideElement();
             $('#pnlValidationFileMaximumSize').hideElement();
@@ -299,6 +379,26 @@
         } else {
             $('[data-card-name=specification-attribute-options]').hideElement();
         }
+
+        toggleAttributeFilterType();
     }
 
+    function toggleAttributeFilterType() {
+        var selectedAttributeControlTypeId = $("#@Html.IdFor(model => model.AttributeControlTypeId)").val();
+
+        //validation
+        if (selectedAttributeControlTypeId == @(((int) AttributeControlType.Numeric).ToString()) || selectedAttributeControlTypeId == @(((int) AttributeControlType.Decimal).ToString())) {
+            $("#pnlAttributeFilterType").showElement()
+            //remove filter types here that doesn't fit for numeric and decimal control types
+
+        } else {
+            $("#@Html.IdFor(model => model.AttributeFilterTypeId)").val(@(((int) AttributeFilterType.Checkboxes).ToString()));
+            $("#pnlAttributeFilterType").hideElement()
+        }
+    }
+
+    function submitForm() {
+        var postData = @Html.Raw(Json.Serialize(Model));
+        var selectedAttributeControlTypeId = $()
+    }
 </script>

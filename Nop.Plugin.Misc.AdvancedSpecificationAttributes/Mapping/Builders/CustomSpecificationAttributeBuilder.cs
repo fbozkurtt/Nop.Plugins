@@ -4,7 +4,7 @@ using Nop.Data.Mapping.Builders;
 using Nop.Data.Extensions;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
 
-namespace Nop.Plugin.Misc.RequireSpecificationAttributes.Mapping.Builders
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Mapping.Builders
 {
     public class CustomSpecificationAttributeBuilder : NopEntityBuilder<CustomSpecificationAttribute>
     {

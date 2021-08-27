@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Nop.Plugin.Misc.CategorySpecAttribute.Mapping
+namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Mapping
 {
     public partial class NameCompatibility : INameCompatibility
     {
