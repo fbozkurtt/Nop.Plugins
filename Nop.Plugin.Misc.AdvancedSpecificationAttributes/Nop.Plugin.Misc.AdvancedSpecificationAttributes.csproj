@@ -43,9 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\mujevher\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj" />
-    <ProjectReference Include="..\..\mujevher\Presentation\Nop.Web\Nop.Web.csproj" />
-    <ClearPluginAssemblies Include="$(MSBuildProjectDirectory)\..\..\mujevher\Build\ClearPluginAssemblies.proj" />
+    <ProjectReference Include="..\..\nopCommerce\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj" />
+    <ProjectReference Include="..\..\nopCommerce\Presentation\Nop.Web\Nop.Web.csproj" />
+    <ClearPluginAssemblies Include="$(MSBuildProjectDirectory)\..\..\nopCommerce\Build\ClearPluginAssemblies.proj" />
   </ItemGroup>
 
   <ItemGroup>
