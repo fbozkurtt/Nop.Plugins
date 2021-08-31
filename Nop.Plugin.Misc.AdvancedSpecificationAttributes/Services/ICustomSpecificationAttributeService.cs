@@ -28,6 +28,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute model);
 
+        Task UpdateCustomSpecificationAttributeAsync(CustomSpecificationAttribute model);
+
         Task<CustomSpecificationAttribute> GetBySpecificationAttributeIdAsync(int specificationAttributeId);
 
         Task<CustomSpecificationAttribute> GetCustomSpecificationAttributeByIdAsync(int customSpecificationAttributeId);

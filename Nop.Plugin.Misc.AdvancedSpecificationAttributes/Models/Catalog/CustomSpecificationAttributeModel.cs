@@ -29,6 +29,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models.Catalog
 
         public int SpecificationAttributeId { get; set; }
 
+        public SpecificationAttributeModel specificationAttributeModel { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Attributes.CheckoutAttributes.Fields.IsRequired")]
         public bool IsRequired { get; set; }
 

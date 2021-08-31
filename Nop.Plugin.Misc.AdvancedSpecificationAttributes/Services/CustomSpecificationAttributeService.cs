@@ -37,9 +37,12 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
         public async Task<CustomSpecificationAttribute> GetCustomSpecificationAttributeByIdAsync(int customSpecificationAttributeId) =>
             await _customSpecificationAttributeRepository.GetByIdAsync(customSpecificationAttributeId);
 
-        public async Task<IList<CustomSpecificationAttribute>> GetAllCustomSpecificationAttributesAsync() => 
+        public async Task<IList<CustomSpecificationAttribute>> GetAllCustomSpecificationAttributesAsync() =>
             await (await _customSpecificationAttributeRepository.GetAllAsync(query =>
                 query)).ToListAsync();
+
+        public async Task UpdateCustomSpecificationAttributeAsync(CustomSpecificationAttribute model) =>
+            await _customSpecificationAttributeRepository.UpdateAsync(model);
 
         #endregion
     }
