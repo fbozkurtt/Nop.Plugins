@@ -86,17 +86,18 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Factories
         #endregion
 
         #region Methods
+
         public async Task<CustomSpecificationAttributeModel> PrepareCustomSpecificationAttributeModelAsync(CustomSpecificationAttributeModel model, CustomSpecificationAttribute customSpecificatonAttribute, bool excludeProperties = false)
         {
             Action<CustomSpecificationAttributeLocalizedModel, int> localizedModelConfiguration = null;
-
-            model.IsRequired = true;
 
             if (customSpecificatonAttribute != null)
             {
                 //fill in model values from the entity
                 model ??= customSpecificatonAttribute.ToModel<CustomSpecificationAttributeModel>();
 
+                //model.AttributeControlTypeId = customSpecificatonAttribute.AttributeControlTypeId;
+                //model.AttributeFilterTypeId = customSpecificatonAttribute.AttributeFilterTypeId;
                 //define localized model configuration action
                 localizedModelConfiguration = async (locale, languageId) =>
                 {

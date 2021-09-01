@@ -8,6 +8,20 @@
 <nop-card id="specification-attribute-plugin" asp-name="specification-attribute-plugin" asp-icon="fas fa-plug" asp-title="Plugin" asp-hide-block-attribute-name="@hidePluginBlockAttributeGroupName" asp-hide="@hidePluginBlock" asp-advanced="false">
     @if (Model.SpecificationAttributeId > 0)
     {
+        <script>
+                $(document).ready(function () {
+                    $("#@Html.IdFor(model => model.ConditionModel.EnableCondition)").click(toggleEnableCondition);
+                    toggleEnableCondition();
+                });
+
+                function toggleEnableCondition() {
+                    if ($('#@Html.IdFor(model => model.ConditionModel.EnableCondition)').is(':checked')) {
+                        $('#pnlAttributes').showElement();
+                    } else {
+                        $('#pnlAttributes').hideElement();
+                    }
+                }
+        </script>
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-md-3">
@@ -154,20 +168,6 @@
                 </div>
             </div>
             <nop-nested-setting asp-for="@Model.ConditionModel.EnableCondition" id="pnlAttributes">
-                <script>
-                $(document).ready(function () {
-                    $("#@Html.IdFor(model => model.ConditionModel.EnableCondition)").click(toggleEnableCondition);
-                    toggleEnableCondition();
-                });
-
-                function toggleEnableCondition() {
-                    if ($('#@Html.IdFor(model => model.ConditionModel.EnableCondition)').is(':checked')) {
-                        $('#pnlAttributes').showElement();
-                    } else {
-                        $('#pnlAttributes').hideElement();
-                    }
-                }
-                </script>
                 @if (Model.ConditionModel.ConditionAttributes.Count > 0)
                 {
                     <div class="form-group row">
@@ -255,14 +255,6 @@
                     </div>
                 }
             </nop-nested-setting>
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <a id="save-plugin" class="btn btn-primary float-right">
-                        <i class="far fa-save"></i>
-                        @T("Admin.Common.Save")
-                    </a>
-                </div>
-            </div>
         </div>
     }
     else
@@ -288,14 +280,35 @@
                 postData[this.name] = $(this).val();
             });
 
-            console.log(postData);
-            event.preventDefault();
-        });
+            if ($('#@Html.IdFor(model => model.ConditionModel.EnableCondition)').is(':checked') == false) {
+                postData['ConditionModel.EnableCondition'] = 'false';
+            }
 
-        //$('#save-plugin').click(function () {
-        //    console.log("tıklandı");
-        //    $('#customspecificationattribute-form').submit();
-        //});
+            if ($('#@Html.IdFor(model => model.IsRequired)').is(':checked') == false) {
+                postData['IsRequired'] = 'false';
+            }
+
+            postData.SpecificationAttributeId = @Model.SpecificationAttributeId;
+            postData.Id = @Model.Id;
+            addAntiForgeryToken(postData);
+
+            console.log(postData);
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@Url.Action("EditCustomSpecificationAttribute", "AdvancedSpecificationAttribute")",
+                data: postData,
+                async: false,
+                success: function (data, textStatus, jqXHR) {
+                    if (!data.Result)
+                        event.preventDefault();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    event.preventDefault();
+                }
+            });
+        });
 
         toggleAttributeControlType();
         toggleAttributeFilterType();
@@ -409,10 +422,5 @@
             $("#@Html.IdFor(model => model.AttributeFilterTypeId)").val(@(((int) AttributeFilterType.Checkboxes).ToString()));
             $("#pnlAttributeFilterType").hideElement()
         }
-    }
-
-    function submitForm() {
-        var postData = @Html.Raw(Json.Serialize(Model));
-        var selectedAttributeControlTypeId = $()
     }
 </script>

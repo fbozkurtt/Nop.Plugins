@@ -38,6 +38,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
             endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.Picture.Upload",
                 "Plugins/CategorySpecificationAttributeGroup/Picture/Upload",
                 new { controller = "Picture", action = "Upload" });
+
+            endpointRouteBuilder.MapControllers();
         }
     }
 }
