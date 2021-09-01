@@ -16,7 +16,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         IList<string> ParseOptions(string attributesXml, int customSpecificationAttributeId);
 
-        string AddCustomSpecificationAttribute(string attributesXml, CustomSpecificationAttribute customSpecificationAttribute, string option);
+        string AddCustomSpecificationAttribute(string attributesXml, CustomSpecificationAttribute customSpecificationAttribute, IList<string> options);
 
         Task<bool?> IsConditionMetAsync(CustomSpecificationAttribute customSpecificationAttribute, string selectedAttributesXml);
 

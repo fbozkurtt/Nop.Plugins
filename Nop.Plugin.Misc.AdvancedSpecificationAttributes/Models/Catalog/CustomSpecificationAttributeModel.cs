@@ -101,13 +101,17 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models.Catalog
 
     public partial record AttributeConditionModel : BaseNopEntityModel
     {
+        public AttributeConditionModel()
+        {
+            SelectedOptionIds = new List<string>();
+        }
         public string Name { get; set; }
 
         public AttributeControlType AttributeControlType { get; set; }
 
         public IList<SelectListItem> Options { get; set; }
 
-        public string SelectedValueId { get; set; }
+        public IList<string> SelectedOptionIds { get; set; }
     }
 
     public partial record CustomSpecificationAttributeLocalizedModel : ILocalizedLocaleModel

@@ -66,7 +66,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         #region Methods
 
-        public string AddCustomSpecificationAttribute(string attributesXml, CustomSpecificationAttribute customSpecificationAttribute, string option)
+        public string AddCustomSpecificationAttribute(string attributesXml, CustomSpecificationAttribute customSpecificationAttribute, IList<string> options)
         {
             var result = string.Empty;
             try

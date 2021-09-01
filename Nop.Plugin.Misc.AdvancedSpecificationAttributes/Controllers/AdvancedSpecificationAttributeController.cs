@@ -85,12 +85,12 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
                             {
                                 var selectedAttribute = model.ConditionModel.ConditionAttributes
                                     .FirstOrDefault(x => x.Id == model.ConditionModel.SelectedAttributeId);
-                                var selectedValue = selectedAttribute?.SelectedValueId;
+                                var selectedOptions = selectedAttribute?.SelectedOptionIds;
 
                                 //for conditions we should empty values save even when nothing is selected
                                 //otherwise "attributesXml" will be empty
                                 //hence we won't be able to find a selected attribute
-                                attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(null, attribute, string.IsNullOrEmpty(selectedValue) ? string.Empty : selectedValue);
+                                attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(null, attribute, string.IsNullOrEmpty(selectedOptions) ? string.Empty : selectedOptions);
                             }
                             break;
                         case AttributeControlType.Checkboxes:
