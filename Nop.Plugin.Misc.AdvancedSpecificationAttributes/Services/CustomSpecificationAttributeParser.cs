@@ -113,9 +113,12 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
                 var attributeValueElement = xmlDoc.CreateElement("SpecificationAttributeOption");
                 attributeElement.AppendChild(attributeValueElement);
 
-                var attributeOptionValueElement = xmlDoc.CreateElement("Option");
-                attributeOptionValueElement.InnerText = option;
-                attributeValueElement.AppendChild(attributeOptionValueElement);
+                foreach (var option in options)
+                {
+                    var attributeOptionValueElement = xmlDoc.CreateElement("Option");
+                    attributeOptionValueElement.InnerText = option;
+                    attributeValueElement.AppendChild(attributeOptionValueElement);
+                }
 
                 result = xmlDoc.OuterXml;
             }

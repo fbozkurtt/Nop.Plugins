@@ -90,7 +90,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
                                 //for conditions we should empty values save even when nothing is selected
                                 //otherwise "attributesXml" will be empty
                                 //hence we won't be able to find a selected attribute
-                                attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(null, attribute, string.IsNullOrEmpty(selectedOptions) ? string.Empty : selectedOptions);
+                                attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(null, attribute, selectedOptions ?? new List<string>());
                             }
                             break;
                         case AttributeControlType.Checkboxes:
@@ -103,10 +103,9 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
                                     .ToList();
 
                                 if (selectedOptions?.Any() ?? false)
-                                    foreach (var value in selectedOptions)
-                                        attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(attributesXml, attribute, value);
+                                        attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(attributesXml, attribute, selectedOptions);
                                 else
-                                    attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(null, attribute, string.Empty);
+                                    attributesXml = _customSpecificationAttributeParser.AddCustomSpecificationAttribute(null, attribute, new List<string>());
                             }
                             break;
                         case AttributeControlType.ReadonlyCheckboxes:

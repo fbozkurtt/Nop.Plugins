@@ -62,7 +62,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Factories
             model.SelectedAttributeId = selectedAttribute?.Id ?? 0;
 
             //get selected specification attribute options identifiers
-            var selectedValuesIds = await _customSpecificationAttributeParser
+            var selectedOptionIds = await _customSpecificationAttributeParser
                 .ParseSpecificationAttributeOptions(customSpecificationAttribute.ConditionAttributeXml).SelectMany(ta => ta.options.Select(v => v.Id)).ToListAsync();
 
             //get available condition specification attributes (ignore this attribute and non-combinable attributes)
@@ -78,7 +78,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Factories
                 {
                     Text = option.Name,
                     Value = option.Id.ToString(),
-                    Selected = selectedAttribute?.Id == attribute.Id && selectedValuesIds.Contains(option.Id)
+                    Selected = selectedAttribute?.Id == attribute.Id && selectedOptionIds.Contains(option.Id)
                 }).ToListAsync()
             }).ToListAsync();
         }

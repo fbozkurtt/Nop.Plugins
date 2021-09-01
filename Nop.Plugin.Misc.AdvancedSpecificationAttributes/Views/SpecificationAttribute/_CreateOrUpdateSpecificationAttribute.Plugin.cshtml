@@ -204,7 +204,28 @@
                                     @switch (Model.ConditionModel.ConditionAttributes[i].AttributeControlType)
                                     {
                                         case AttributeControlType.DropdownList:
-                                            <nop-select asp-for="@Model.ConditionModel.ConditionAttributes[i].SelectedValueId" asp-items="@Model.ConditionModel.ConditionAttributes[i].Options" />
+                                            <nop-select asp-for="@Model.ConditionModel.ConditionAttributes[i].SelectedOptionIds" asp-items="@Model.ConditionModel.ConditionAttributes[i].Options" asp-multiple="true" />
+                                            <script>
+                                                $(document).ready(function() {
+				                                	var categoryIdsInput = $('#@Html.IdFor(model => model.ConditionModel.ConditionAttributes[i].SelectedOptionIds)').data("kendoMultiSelect");
+				                                	    categoryIdsInput.setOptions({
+                                                        autoClose: false,
+                                                        filter: "contains"
+                                                    });
+
+				                                    @if (Model.ConditionModel.ConditionAttributes[i].Options.Count == 0)
+                                                    {
+                                                        <text>
+                                                            categoryIdsInput.setOptions({
+                                                                enable: false,
+                                                                placeholder: '@T("Admin.Catalog.Products.Fields.Categories.NoCategoriesAvailable")'
+                                                            });
+                                                            categoryIdsInput._placeholder();
+                                                            categoryIdsInput._enable();
+                                                        </text>
+                                                    }
+                                                });
+                                            </script>
                                             break;
                                         case AttributeControlType.RadioList:
                                         case AttributeControlType.ColorSquares:
@@ -213,7 +234,7 @@
                                             {
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" asp-for="@Model.ConditionModel.ConditionAttributes[i].SelectedValueId" value="@option.Value" checked="@option.Selected">
+                                                        <input type="radio" class="form-check-input" asp-for="@Model.ConditionModel.ConditionAttributes[i].SelectedOptionIds" value="@option.Value" checked="@option.Selected">
                                                         @option.Text
                                                     </label>
                                                 </div>
@@ -237,6 +258,8 @@
                                         case AttributeControlType.MultilineTextbox:
                                         case AttributeControlType.Datepicker:
                                         case AttributeControlType.FileUpload:
+                                        case AttributeControlType.Numeric:
+                                        case AttributeControlType.Decimal:
                                         default:
                                             //not supported as conditions
                                             break;
