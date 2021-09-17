@@ -43,6 +43,21 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Components
 
             var customSpesificationAttribute = await _customSpecificationAttributeService.GetBySpecificationAttributeIdAsync(model.Id);
 
+
+            // Create new custom spec attribute if not exists.
+            if(customSpesificationAttribute == null)
+            {
+                await _customSpecificationAttributeService.InsertCustomSpecificationAttributeAsync(new CustomSpecificationAttribute()
+                {
+                    SpecificationAttributeId = model.Id,
+                    IsRequired = false,
+                    AttributeControlType = AttributeControlType.DropdownList,
+                    AttributeFilterType = AttributeFilterType.Checkboxes
+                });
+
+                customSpesificationAttribute = await _customSpecificationAttributeService.GetBySpecificationAttributeIdAsync(model.Id);
+            }
+
             var customSpecificationAttributeModel = customSpesificationAttribute == null
                 ? await _customSpecificationAttributeModelFactory
               .PrepareCustomSpecificationAttributeModelAsync(new CustomSpecificationAttributeModel(), null)

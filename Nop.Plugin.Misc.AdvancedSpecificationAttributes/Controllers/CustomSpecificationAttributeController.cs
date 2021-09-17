@@ -177,10 +177,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
                 return ErrorJson(ModelState.SerializeErrors());
 
             var customSpecificationAttribute = model.ToEntity<CustomSpecificationAttribute>();
-            await SaveConditionAttributesAsync(customSpecificationAttribute, model);
             await _customSpecificationAttributeService.InsertCustomSpecificationAttributeAsync(customSpecificationAttribute);
-
-            await UpdateAttributeLocalesAsync(customSpecificationAttribute, model);
 
             //_notificationService.ErrorNotification(await _localizationService.GetResourceAsync("Admin.Catalog.Attributes.CheckoutAttributes.Updated"));
 

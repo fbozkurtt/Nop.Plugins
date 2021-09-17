@@ -3,7 +3,7 @@
   "FriendlyName": "Advanced Specification Attributes",
   "SystemName": "AdvancedSpecificationAttributes",
   "Version": "1.00",
-  "SupportedVersions": [ "4.40" ],
+  "SupportedVersions": [ "4.50" ],
   "Author": "Furkan Bozkurt",
   "DisplayOrder": 1,
   "FileName": "Nop.Plugin.Misc.AdvancedSpecificationAttributes.dll",
