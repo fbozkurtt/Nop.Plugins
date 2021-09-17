@@ -43,9 +43,11 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Components
 
             var customSpesificationAttribute = await _customSpecificationAttributeService.GetBySpecificationAttributeIdAsync(model.Id);
 
-            var customSpecificationAttributeModel = await _customSpecificationAttributeModelFactory
-                .PrepareCustomSpecificationAttributeModelAsync(null,
-                customSpesificationAttribute);
+            var customSpecificationAttributeModel = customSpesificationAttribute == null
+                ? await _customSpecificationAttributeModelFactory
+              .PrepareCustomSpecificationAttributeModelAsync(new CustomSpecificationAttributeModel(), null)
+              : await _customSpecificationAttributeModelFactory
+                .PrepareCustomSpecificationAttributeModelAsync(null, customSpesificationAttribute);
 
             return View("~/Plugins/Misc.AdvancedSpecificationAttributes/Views/SpecificationAttribute/_CreateOrUpdateSpecificationAttribute.Plugin.cshtml", customSpecificationAttributeModel);
         }

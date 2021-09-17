@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
 {
-    public class PictureController : BasePluginController
+    public class CustomPictureController : BasePluginController
     {
         #region Fields
 
@@ -20,7 +20,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
 
         #region Ctor
 
-        public PictureController(IPictureService pictureService)
+        public CustomPictureController(IPictureService pictureService)
         {
             _pictureService = pictureService;
         }

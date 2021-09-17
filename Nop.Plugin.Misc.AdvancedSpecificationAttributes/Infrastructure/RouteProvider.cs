@@ -15,30 +15,6 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
 
         public void RegisterRoutes(IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.Create",
-                "Admin/CategorySpecificationAttributeGroup/Create",
-                new { controller = "CategorySpecificationAttributeGroup", action = "Create" });
-
-            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.GetSpecificationAttributesByCategoryId",
-                "Plugins/CategorySpecificationAttributeGroup/GetSpecificationAttributesByCategoryId",
-                new { controller = "CategorySpecificationAttributeGroup", action = "GetSpecificationAttributesByCategoryId" });
-
-            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.Product.ProductSpecificationAttributeAdd",
-                "Plugins/CategorySpecificationAttributeGroup/Product/ProductSpecificationAttributeAdd",
-                new { controller = "Product", action = "ProductSpecificationAttributeAdd" });
-
-            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.Product.Create",
-                "Plugins/CategorySpecificationAttributeGroup/Product/Create",
-                new { controller = "Product", action = "Create" });
-
-            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.Product.ProductPictureAdd",
-                "Plugins/CategorySpecificationAttributeGroup/Product/ProductPictureAdd",
-                new { controller = "Product", action = "ProductPictureAdd" });
-
-            endpointRouteBuilder.MapControllerRoute("Plugin.Misc.CategorySpecificationAttributeGroup.Picture.Upload",
-                "Plugins/CategorySpecificationAttributeGroup/Picture/Upload",
-                new { controller = "Picture", action = "Upload" });
-
             endpointRouteBuilder.MapControllers();
         }
     }

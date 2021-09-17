@@ -293,46 +293,48 @@
         $("#@Html.IdFor(model => model.AttributeFilterTypeId)").change(toggleAttributeFilterType);
 
         var model = @Html.Raw(Json.Serialize(Model));
-        console.log(model);
 
-        $('#specificationattribute-form').submit(function (event) {
-            var $inputs = $('#specification-attribute-plugin :input');
+        @if (Model.SpecificationAttributeId > 0) {
+            <text>
+                $('#specificationattribute-form').submit(function (event) {
+                        var $inputs = $('#specification-attribute-plugin :input');
 
-            var postData = {};
-            $inputs.each(function () {
-                postData[this.name] = $(this).val();
-            });
+                        var postData = {};
+                        $inputs.each(function () {
+                            postData[this.name] = $(this).val();
+                        });
 
-            if ($('#@Html.IdFor(model => model.ConditionModel.EnableCondition)').is(':checked') == false) {
-                postData['ConditionModel.EnableCondition'] = 'false';
-            }
+                        if ($('#@Html.IdFor(model => model.ConditionModel.EnableCondition)').is(':checked') == false) {
+                            postData['ConditionModel.EnableCondition'] = 'false';
+                        }
 
-            if ($('#@Html.IdFor(model => model.IsRequired)').is(':checked') == false) {
-                postData['IsRequired'] = 'false';
-            }
+                        if ($('#@Html.IdFor(model => model.IsRequired)').is(':checked') == false) {
+                            postData['IsRequired'] = 'false';
+                        }
 
-            postData.SpecificationAttributeId = @Model.SpecificationAttributeId;
-            postData.Id = @Model.Id;
-            addAntiForgeryToken(postData);
+                        postData.SpecificationAttributeId = @Model.SpecificationAttributeId;
+                        postData.Id = @Model.Id;
+                        addAntiForgeryToken(postData);
 
-            console.log(postData);
+                        console.log(postData);
 
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: "@Url.Action("EditCustomSpecificationAttribute", "AdvancedSpecificationAttribute")",
-                data: postData,
-                async: false,
-                success: function (data, textStatus, jqXHR) {
-                    if (!data.Result)
-                        event.preventDefault();
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    event.preventDefault();
-                }
-            });
-        });
-
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "@Url.Action("EditCustomSpecificationAttribute", "CustomSpecificationAttribute")",
+                            data: postData,
+                            async: false,
+                            success: function (data, textStatus, jqXHR) {
+                                if (!data.Result)
+                                    event.preventDefault();
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                event.preventDefault();
+                            }
+                        });
+                });
+        </text>
+        }
         toggleAttributeControlType();
         toggleAttributeFilterType();
     });

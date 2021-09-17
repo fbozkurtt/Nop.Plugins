@@ -105,12 +105,15 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Factories
                 };
 
                 await PrepareConditionAttributesModelAsync(model.ConditionModel, customSpecificatonAttribute);
+
+                model.ConditionAllowed = true;
+
             }
 
-            model.ConditionAllowed = true;
-
             if (!excludeProperties)
+            {
                 model.Locales = await _localizedModelFactory.PrepareLocalizedModelsAsync(localizedModelConfiguration);
+            }
 
             return model;
         }

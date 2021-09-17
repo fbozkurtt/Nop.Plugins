@@ -3,6 +3,7 @@ using Nop.Core.Caching;
 using Nop.Core.Domain.Catalog;
 using Nop.Data;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
+using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models;
 using Nop.Services.Catalog;
 using Nop.Services.Security;
 using Nop.Services.Stores;
@@ -16,19 +17,22 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 {
     public interface ICustomSpecificationAttributeService
     {
-        #region Fields
+
+        #region Custom specification attribute group
+
+        Task InsertCategorySpecificationAttributeGroupAsync(SpecificationAttributeGroupCategoryModel specificationAttributeGroupCategoryModel);
+
+        Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId);
+
+        Task<IList<CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId);
 
         #endregion
 
-        #region Ctor
+        #region Custom specification attribute
 
-        #endregion
+        Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute customSpecificationAttribute);
 
-        #region Methods
-
-        Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute model);
-
-        Task UpdateCustomSpecificationAttributeAsync(CustomSpecificationAttribute model);
+        Task UpdateCustomSpecificationAttributeAsync(CustomSpecificationAttribute customSpecificationAttribute);
 
         Task<CustomSpecificationAttribute> GetBySpecificationAttributeIdAsync(int specificationAttributeId);
 
@@ -36,7 +40,11 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         Task<IList<CustomSpecificationAttribute>> GetAllCustomSpecificationAttributesAsync();
 
-        #region Custom specification attribute options
+        #endregion
+
+        #region
+
+        #region Custom specification attribute option
 
         //Task<CustomSpecificationAttributeOption> GetCustomSpecificationAttributeOptionByIdAsync(int customSpecificationAttributeOptionId);
 

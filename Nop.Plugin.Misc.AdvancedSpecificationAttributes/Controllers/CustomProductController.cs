@@ -27,7 +27,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
     [AutoValidateAntiforgeryToken]
     [ValidateIpAddress]
     [AuthorizeAdmin]
-    public class ProductController : BasePluginController
+    public class CustomProductController : BasePluginController
     {
         #region Fields
 
@@ -47,7 +47,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
 
         #region Ctor
 
-        public ProductController(IPermissionService permissionService, ISpecificationAttributeService specificationAttributeService, IProductService productService, IProductModelFactory productModelFactory, ICategoryService categoryService, ILocalizationService localizationService, ICustomerActivityService customerActivityService, IWorkContext workContext, IPictureService pictureService, IUrlRecordService urlRecordService, VendorSettings vendorSettings)
+        public CustomProductController(IPermissionService permissionService, ISpecificationAttributeService specificationAttributeService, IProductService productService, IProductModelFactory productModelFactory, ICategoryService categoryService, ILocalizationService localizationService, ICustomerActivityService customerActivityService, IWorkContext workContext, IPictureService pictureService, IUrlRecordService urlRecordService, VendorSettings vendorSettings)
         {
             _permissionService = permissionService;
             _specificationAttributeService = specificationAttributeService;

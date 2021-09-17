@@ -14,11 +14,11 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Infrastructure
         {
             if (context.AreaName == "Admin")
             {
-                viewLocations = new[] { $"/Plugins/Nop.Plugin.Misc.CategorySpecAttribute/Areas/Admin/Views/{context.ControllerName}/{context.ViewName}.cshtml" }.Concat(viewLocations);
+                viewLocations = new[] { $"/Plugins/Nop.Plugin.Misc.AdvancedSpecificationAttributes/Areas/Admin/Views/{context.ControllerName}/{context.ViewName}.cshtml" }.Concat(viewLocations);
             }
             else
             {
-                viewLocations = new[] { $"/Plugins/Nop.Plugin.Misc.CategorySpecAttribute/Views/{context.ControllerName}/{context.ViewName}.cshtml" }.Concat(viewLocations);
+                viewLocations = new[] { $"/Plugins/Nop.Plugin.Misc.AdvancedSpecificationAttributes/Views/{context.ControllerName}/{context.ViewName}.cshtml" }.Concat(viewLocations);
             }
 
             return viewLocations;

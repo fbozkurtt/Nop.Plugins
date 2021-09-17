@@ -24,7 +24,10 @@
         $.ajax({
             cache: false,
             type: "GET",
-            url: "@Url.Action("GetSpecificationAttributesByCategoryId", "CategorySpecificationAttributeGroup")" + "?categoryId=" + selectedCategoryId,
+            url: "@Url.Action("GetSpecificationAttributesWithOptionsByCategory", "CustomSpecificationAttribute")",
+            data: {
+                "categoryId": selectedCategoryId
+            },
             success: function (data, textStatus, jqXHR) {
                 console.log("GET: SpecAttributeOptions")
                 console.log(data);
@@ -66,7 +69,7 @@
         $.ajax({
             cache: false,
             type: "POST",
-            url: "@Url.Action("ProductSpecificationAttributeAdd", "Product")",
+            url: "@Url.Action("ProductSpecificationAttributeAdd", "CustomProduct")",
             data: postData,
             success: function (data, textStatus, jqXHR) {
                 saveProductPicture(productId);
@@ -98,7 +101,7 @@
         $.ajax({
             cache: false,
             type: "POST",
-            url: "@Url.Action("Create", "Product")",
+            url: "@Url.Action("Create", "CustomProduct")",
             data: postData,
             success: function (data, textStatus, jqXHR) {
                 saveSpecificationAttributes(data);
@@ -136,7 +139,7 @@
         $.ajax({
             cache: false,
             type: "POST",
-            url: "@(Url.Action("ProductPictureAdd", "/Product"))",
+            url: "@(Url.Action("ProductPictureAdd", "CustomProduct"))",
             data: postData,
             success: function (data, textStatus, jqXHR) {
                 if (!data.Result) {
@@ -170,7 +173,7 @@
                 $.ajax({
                     cache: false,
                     type: "POST",
-                    url: "@Url.Action("Upload", "Picture")",
+                    url: "@Url.Action("Upload", "CustomPicture")",
                     contentType: false,
                     processData: false,
                     data: formData,

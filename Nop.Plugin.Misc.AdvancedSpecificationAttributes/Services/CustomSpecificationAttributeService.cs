@@ -1,5 +1,6 @@
 ﻿using Nop.Data;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
+using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
 
         #region Methods
 
-        public async Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute model) =>
-            await _customSpecificationAttributeRepository.InsertAsync(model);
+        public async Task InsertCustomSpecificationAttributeAsync(CustomSpecificationAttribute customSpecificationAttribute) =>
+            await _customSpecificationAttributeRepository.InsertAsync(customSpecificationAttribute);
 
         public async Task<CustomSpecificationAttribute> GetBySpecificationAttributeIdAsync(int specificationAttributeId) =>
             (await _customSpecificationAttributeRepository.GetAllAsync(query =>
@@ -41,8 +42,23 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services
             await (await _customSpecificationAttributeRepository.GetAllAsync(query =>
                 query)).ToListAsync();
 
-        public async Task UpdateCustomSpecificationAttributeAsync(CustomSpecificationAttribute model) =>
-            await _customSpecificationAttributeRepository.UpdateAsync(model);
+        public async Task UpdateCustomSpecificationAttributeAsync(CustomSpecificationAttribute customSpecificationAttribute) =>
+            await _customSpecificationAttributeRepository.UpdateAsync(customSpecificationAttribute);
+
+        public Task InsertCategorySpecificationAttributeGroupAsync(SpecificationAttributeGroupCategoryModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<CategorySpecificationAttributeGroup>> GetBySpecificationAttributeGroupIdAsync(int specificationAttributeGroupId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<CategorySpecificationAttributeGroup>> GetByCategoryIdAsync(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }
