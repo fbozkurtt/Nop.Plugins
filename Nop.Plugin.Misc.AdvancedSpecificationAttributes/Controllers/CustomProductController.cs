@@ -113,7 +113,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
             //prepare model
             var model = await _productModelFactory.PrepareProductModelAsync(new ProductModel(), null);
 
-            return View("~/Plugins/Misc.AdvancedSpecificationAttributes/Views/Product/Create.cshtml", model);
+            return View("~/Plugins/Misc.AdvancedSpecificationAttributes/Views/Product/CustomCreate.cshtml", model);
         }
 
         [HttpPost]

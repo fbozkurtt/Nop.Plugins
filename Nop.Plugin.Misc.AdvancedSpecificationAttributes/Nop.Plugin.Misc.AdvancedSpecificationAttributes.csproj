@@ -15,6 +15,7 @@
     <None Remove="plugin.json" />
     <None Remove="Views\Product\CreateProduct.cshtml" />
     <None Remove="Views\Components\CreateProductButton.cshtml" />
+    <None Remove="Views\Product\_CreateOrUpdate.Plugin.cshtml" />
     <None Remove="Views\SpecificationAttribute\_CreateOrUpdateSpecificationAttribute.Plugin.cshtml" />
     <None Remove="Views\SpecificationAttribute\_CreateOrUpdateSpecificationAttributeGroup.Categories.cshtml" />
     <None Remove="Views\_ViewImports.cshtml" />
@@ -27,10 +28,13 @@
     <Content Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Product\Create.cshtml">
+    <Content Include="Views\Product\CustomCreate.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Components\CreateProductButton.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Product\_CreateOrUpdate.Plugin.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\SpecificationAttribute\_CreateOrUpdateSpecificationAttribute.Plugin.cshtml">

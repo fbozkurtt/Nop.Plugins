@@ -33,6 +33,11 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes
         public const string CUSTOM_SPECIFICATION_ATTRIBUTE_VIEW_COMPONENT_NAME = "CustomSpecificationAttribute";
 
         /// <summary>
+        /// Gets a name of the view component to display payment info in public store
+        /// </summary>
+        public const string CUSTOM_PRODUCT_SPECIFICATION_ATTRIBUTES_VIEW_COMPONENT_NAME = "CustomProductSpecificationAttributes";
+
+        /// <summary>
         /// Gets a name of the view component to add script to pages
         /// </summary>
         public const string SCRIPT_VIEW_COMPONENT_NAME = "PayPalSmartPaymentButtonsScript";

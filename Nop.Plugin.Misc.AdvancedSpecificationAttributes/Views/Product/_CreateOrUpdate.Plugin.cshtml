@@ -1,0 +1,142 @@
+﻿@model ProductModel
+
+@{
+    const string hidePluginBlockAttributeGroupName = "ProductPage.HidePluginBlock";
+    var hidePluginBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hidePluginBlockAttributeGroupName);
+}
+
+<nop-card id="product-plugin" asp-name="product-plugin" asp-icon="fas fa-cog" asp-title="Specification Attributes" asp-hide-block-attribute-name="hidePluginBlockAttributeGroupName" asp-hide="hidePluginBlock" asp-advanced="false">
+    @if (Model.Id > 0)
+    {
+        @if (Model.HasAvailableSpecificationAttributes)
+        {
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleFormControlSelect1">Example attribute 1</label>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Example attribute 2</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                option 1
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                option 2
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Example attribute 3</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                option 1
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                option 2
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                            <label class="form-check-label" for="defaultCheck3">
+                                option 3
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleAttribute4">Example attribute 4</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="exampleAttribute4" aria-describedby="exampleAttrbute4Help">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleAttribute5">Example attribute 5</label>
+                    </div>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="exampleAttribute5" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleAttribute6">Example attribute 6</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="file" class="form-control-file" id="exampleAttribute6">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleAttribute7">Example attribute 7</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="date" class="form-control" id="exampleAttribute7">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleAttribute8">Example attribute 8</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" id="exampleAttribute8">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="exampleAttribute9">Example attribute 9</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" id="exampleAttribute9">
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card card-default">
+                <div class="card-body">
+                    @T("Admin.Catalog.Products.SpecificationAttributes.NoAttributes")
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card-body">
+            @T("Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.SaveBeforeEdit")
+        </div>
+    }
+</nop-card>
+<script>
+    $(document).ready(function () {
+        $('[data-card-name=product-specification-attributes]').hideElement();
+    });
+</script>

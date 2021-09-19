@@ -50,6 +50,9 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes
             if (widgetZone.Equals(AdminWidgetZones.SpecificationAttributeDetailsBlock))
                 return AdvancedSpecificationAttributesDefaults.CUSTOM_SPECIFICATION_ATTRIBUTE_VIEW_COMPONENT_NAME;
 
+            if (widgetZone.Equals(AdminWidgetZones.ProductDetailsBlock))
+                return AdvancedSpecificationAttributesDefaults.CUSTOM_PRODUCT_SPECIFICATION_ATTRIBUTES_VIEW_COMPONENT_NAME;
+
             if (widgetZone.Equals(PublicWidgetZones.SearchBoxBeforeSearchButton))
                 return "CreateProductButton";
 
@@ -62,7 +65,8 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes
             {
                 AdminWidgetZones.SpecificationAttributeGroupDetailsBlock,
                 AdminWidgetZones.SpecificationAttributeDetailsBlock,
-                PublicWidgetZones.SearchBoxBeforeSearchButton
+                AdminWidgetZones.ProductDetailsBlock,
+                PublicWidgetZones.SearchBoxBeforeSearchButton,
             });
         }
 

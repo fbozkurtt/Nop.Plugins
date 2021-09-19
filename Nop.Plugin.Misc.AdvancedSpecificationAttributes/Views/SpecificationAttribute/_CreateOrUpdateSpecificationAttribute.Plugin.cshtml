@@ -289,6 +289,8 @@
 </nop-card>
 <script>
     $(document).ready(function () {
+        var model = @Html.Raw(Json.Serialize(Model));
+        console.log(model);
         $("#@Html.IdFor(model => model.AttributeControlTypeId)").change(toggleAttributeControlType);
         $("#@Html.IdFor(model => model.AttributeFilterTypeId)").change(toggleAttributeFilterType);
 

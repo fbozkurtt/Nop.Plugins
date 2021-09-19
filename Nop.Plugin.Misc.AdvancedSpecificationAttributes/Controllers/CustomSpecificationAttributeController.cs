@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Domain;
+using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Factories;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Models.Catalog;
 using Nop.Plugin.Misc.AdvancedSpecificationAttributes.Services;
@@ -37,12 +38,13 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
         private readonly ICustomSpecificationAttributeService _customSpecificationAttributeService;
         private readonly ICustomSpecificationAttributeParser _customSpecificationAttributeParser;
         private readonly ICategorySpecificationAttributeService _categorySpecificationAttributeService;
+        private readonly ICustomSpecificationAttributeModelFactory _customSpecificationAttributeModelFactory;
 
         #endregion
 
         #region Ctor
 
-        public CustomSpecificationAttributeController(ICustomerActivityService customerActivityService, IPermissionService permissionService, ILocalizationService localizationService, ILocalizedEntityService localizedEntityService, INotificationService notificationService, ISpecificationAttributeService specificationAttributeService, ICustomSpecificationAttributeService customSpecificationAttributeService, ICustomSpecificationAttributeParser customSpecificationAttributeParser, ICategorySpecificationAttributeService categorySpecificationAttributeService)
+        public CustomSpecificationAttributeController(ICustomerActivityService customerActivityService, IPermissionService permissionService, ILocalizationService localizationService, ILocalizedEntityService localizedEntityService, INotificationService notificationService, ISpecificationAttributeService specificationAttributeService, ICustomSpecificationAttributeService customSpecificationAttributeService, ICustomSpecificationAttributeParser customSpecificationAttributeParser, ICategorySpecificationAttributeService categorySpecificationAttributeService, ICustomSpecificationAttributeModelFactory customSpecificationAttributeModelFactory)
         {
             _customerActivityService = customerActivityService;
             _permissionService = permissionService;
@@ -53,6 +55,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
             _customSpecificationAttributeService = customSpecificationAttributeService;
             _customSpecificationAttributeParser = customSpecificationAttributeParser;
             _categorySpecificationAttributeService = categorySpecificationAttributeService;
+            _customSpecificationAttributeModelFactory = customSpecificationAttributeModelFactory;
         }
 
         #endregion
@@ -161,29 +164,6 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
             return Json(new { Result = true });
         }
 
-        [Area(AreaNames.Admin)]
-        [HttpPost]
-        public async Task<IActionResult> CreateCustomSpecificationAttribute(CustomSpecificationAttributeModel model)
-        {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
-                return AccessDeniedView();
-
-            //try to get a specification attribute with the specified id
-            var specificationAttribute = await _specificationAttributeService.GetSpecificationAttributeByIdAsync(model.SpecificationAttributeId);
-            if (specificationAttribute == null)
-                return ErrorJson("Specification attribute not found");
-
-            if (!ModelState.IsValid)
-                return ErrorJson(ModelState.SerializeErrors());
-
-            var customSpecificationAttribute = model.ToEntity<CustomSpecificationAttribute>();
-            await _customSpecificationAttributeService.InsertCustomSpecificationAttributeAsync(customSpecificationAttribute);
-
-            //_notificationService.ErrorNotification(await _localizationService.GetResourceAsync("Admin.Catalog.Attributes.CheckoutAttributes.Updated"));
-
-            return Json(new { Result = true });
-        }
-
         #endregion
 
         #region Custom specification attribute groups
@@ -216,6 +196,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
                                                          select new
                                                          {
                                                              name = s.Name,
+                                                             customSpecificationAttribute = _customSpecificationAttributeModelFactory.PrepareCustomSpecificationAttributeModelAsync(null, _customSpecificationAttributeService.GetBySpecificationAttributeIdAsync(s.Id).Result).Result,
                                                              options = (from o in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttributeAsync(s.Id).Result
                                                                         select new
                                                                         {
@@ -234,6 +215,7 @@ namespace Nop.Plugin.Misc.AdvancedSpecificationAttributes.Controllers
                                                select new
                                                {
                                                    name = s.Name,
+                                                   customSpecificationAttribute = _customSpecificationAttributeModelFactory.PrepareCustomSpecificationAttributeModelAsync(null, _customSpecificationAttributeService.GetBySpecificationAttributeIdAsync(s.Id).Result).Result,
                                                    options = (from o in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttributeAsync(s.Id).Result
                                                               select new
                                                               {
